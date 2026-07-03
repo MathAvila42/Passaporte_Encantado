@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: #E8EFE8;
+  font-family: 'Nunito', sans-serif;
+  color: #1A2421;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.phone-shell {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  overflow: hidden;
+  background: white;
+  font-family: 'Nunito', sans-serif;
+}
+
+@media (min-width: 560px) {
+  .phone-shell {
+    height: min(100dvh, 900px);
+    margin: 20px 0;
+    border-radius: 32px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  }
+}
+
+@keyframes floatFairy {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes scanBeam {
+  0% {
+    top: 4%;
+  }
+  100% {
+    top: 90%;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
