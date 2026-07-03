@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:48px 24px; box-sizing:border-box; background:radial-gradient(ellipse at 50% 30%, #1A7A6A 0%, #0A3D33 55%, #051A14 100%); }
+    @keyframes floatFairy { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-8px) rotate(3deg)} }
+    @keyframes scanBeam { 0%{top:2%} 100%{top:93%} }
+    @keyframes bounceIn { 0%{transform:translateY(60px);opacity:0} 60%{transform:translateY(-6px)} 100%{transform:translateY(0);opacity:1} }
+    @keyframes popStar { 0%{transform:scale(0.3);opacity:0} 60%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ isQr }}" hint-size="402px,874px">
+  <div style="position:absolute;inset:0;overflow:hidden;font-family:'Nunito',sans-serif;">
+    <div style="position:relative;width:100%;height:100%;">
+
+      <!-- ══════════════════════ LOCAIS ══════════════════════ -->
+      <sc-if value="{{ isLocais }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;background:#F5FAF8;">
+
+          <!-- Header -->
+          <div style="padding:70px 20px 14px;background:white;border-bottom:1px solid #EAF2EF;">
+            <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:#5A7A70;font-weight:700;margin-bottom:4px;">
+              <svg width="11" height="14" viewBox="0 0 11 14"><path d="M5.5 0C2.5 0 0 2.5 0 5.5c0 4 5.5 8.5 5.5 8.5S11 9.5 11 5.5C11 2.5 8.5 0 5.5 0zm0 7.5a2 2 0 110-4 2 2 0 010 4z" fill="#1A7A6A"/></svg>
+              Encantado, RS
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="font-size:26px;font-weight:900;color:#1A2421;">Explorar</div>
+              <div style="width:42px;height:42px;background:#F0F7F5;border-radius:21px;display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="7.5" cy="7.5" r="5" stroke="#1A7A6A" stroke-width="1.8"/><path d="M11.5 11.5l3.5 3.5" stroke="#1A7A6A" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div style="position:relative;flex-shrink:0;">
+            <svg viewBox="0 0 402 245" width="402" height="245" style="display:block;">
+              <rect width="402" height="245" fill="#D2ECE4"/>
+              <rect x="32" y="38" width="68" height="42" fill="#BCE0D3" rx="4"/>
+              <rect x="138" y="16" width="50" height="32" fill="#BCE0D3" rx="4"/>
+              <rect x="215" y="26" width="76" height="48" fill="#BCE0D3" rx="4"/>
+              <rect x="315" y="46" width="55" height="38" fill="#BCE0D3" rx="4"/>
+              <rect x="235" y="148" width="70" height="44" fill="#BCE0D3" rx="4"/>
+              <rect x="36" y="150" width="50" height="38" fill="#BCE0D3" rx="4"/>
+              <!-- Park Jardim dos Sentidos -->
+              <ellipse cx="112" cy="125" rx="52" ry="40" fill="#A0D4C2" opacity="0.94"/>
+              <ellipse cx="305" cy="140" rx="30" ry="23" fill="#A0D4C2" opacity="0.7"/>
+              <!-- River -->
+              <path d="M0 206 Q78 193 162 210 Q242 228 322 210 Q366 200 402 210L402 245L0 245Z" fill="#78C4DC" opacity="0.72"/>
+              <!-- Roads main -->
+              <rect x="0" y="92" width="402" height="7" fill="white" opacity="0.9"/>
+              <rect x="192" y="0" width="7" height="245" fill="white" opacity="0.9"/>
+              <!-- Roads secondary -->
+              <rect x="0" y="56" width="194" height="4" fill="white" opacity="0.7"/>
+              <rect x="110" y="0" width="4" height="194" fill="white" opacity="0.7"/>
+              <rect x="292" y="56" width="4" height="148" fill="white" opacity="0.7"/>
+              <rect x="196" y="150" width="206" height="4" fill="white" opacity="0.7"/>
+              <!-- Pin: Jardim dos Sentidos (user — teal pulse) -->
+              <circle cx="112" cy="120" r="22" fill="#1A7A6A" opacity="0.1"/>
+              <circle cx="112" cy="120" r="14" fill="#1A7A6A" opacity="0.18"/>
+              <circle cx="112" cy="120" r="15" fill="#1A7A6A" stroke="white" stroke-width="3"/>
+              <circle cx="112" cy="120" r="7" fill="white"/>
+              <circle cx="112" cy="120" r="4" fill="#1A7A6A"/>
+              <!-- Pin: Cristo Protetor (orange) -->
+              <circle cx="306" cy="62" r="13" fill="#E8834A" stroke="white" stroke-width="2.5"/>
+              <circle cx="306" cy="62" r="6" fill="white"/>
+              <!-- Pin: Museu (purple) -->
+              <circle cx="226" cy="98" r="11" fill="#7C5CBF" stroke="white" stroke-width="2"/>
+              <circle cx="226" cy="98" r="5" fill="white"/>
+              <!-- Pin: Cantina (amber) -->
+              <circle cx="348" cy="108" r="10" fill="#E9A83A" stroke="white" stroke-width="2"/>
+              <circle cx="348" cy="108" r="4.5" fill="white"/>
+              <!-- Compass -->
+              <circle cx="372" cy="26" r="15" fill="white" opacity="0.93"/>
+              <text x="372" y="22" text-anchor="middle" font-size="9" fill="#1A7A6A" font-weight="800" font-family="Nunito">N</text>
+              <polygon points="372,23 374,33 372,31 370,33" fill="#1A7A6A"/>
+            </svg>
+            <!-- Map floating card -->
+            <div style="position:absolute;bottom:10px;left:12px;right:12px;background:white;border-radius:14px;padding:10px 14px;box-shadow:0 4px 18px rgba(0,0,0,0.14);display:flex;align-items:center;gap:10px;">
+              <div style="width:10px;height:10px;border-radius:5px;background:#1A7A6A;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:800;color:#1A2421;">Jardim dos Sentidos</div>
+                <div style="font-size:11px;color:#5A7A70;margin-top:1px;">330m · Aberto agora</div>
+              </div>
+              <span style="background:#F0FAF7;color:#1A7A6A;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:800;">+150 pts</span>
+            </div>
+          </div>
+
+          <!-- Suggestion card -->
+          <div style="margin:16px 16px 0;">
+            <div style="background:linear-gradient(140deg,#1A7A6A 0%,#0E5C4C 100%);border-radius:22px;padding:20px;color:white;box-shadow:0 6px 20px rgba(26,122,106,0.28);">
+              <div style="font-size:11px;font-weight:800;opacity:0.72;letter-spacing:0.8px;text-transform:uppercase;">✨ Comece sua jornada</div>
+              <div style="font-size:22px;font-weight:900;margin-top:6px;line-height:1.15;">Jardim dos Sentidos</div>
+              <div style="font-size:14px;opacity:0.8;margin-top:5px;margin-bottom:16px;line-height:1.45;">Floricultura sensorial — aromas, texturas e cores únicas de Encantado.</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+                <span style="background:rgba(255,255,255,0.17);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;">🌸 Natureza</span>
+                <span style="background:rgba(255,255,255,0.17);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;">♿ Acessível</span>
+                <span style="background:#E8834A;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:800;">+150 pts</span>
+              </div>
+              <div style="background:rgba(0,0,0,0.18);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" onClick="{{ goQr }}">
+                <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="12" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="2" y="12" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="4" y="4" width="4" height="4" fill="white"/><rect x="14" y="4" width="4" height="4" fill="white"/><rect x="4" y="14" width="4" height="4" fill="white"/><rect x="13" y="13" width="2" height="2" fill="white"/><rect x="17" y="13" width="2" height="2" fill="white"/><rect x="13" y="17" width="2" height="2" fill="white"/><rect x="17" y="17" width="2" height="2" fill="white"/><rect x="15" y="15" width="2" height="2" fill="white"/></svg>
+                <div style="flex:1;">
+                  <div style="font-size:14px;font-weight:800;">Já está no local?</div>
+                  <div style="font-size:12px;opacity:0.72;margin-top:1px;">Escanear QR e ganhar pontos</div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nearby -->
+          <div style="padding:20px 16px 8px;">
+            <div style="font-size:19px;font-weight:900;color:#1A2421;margin-bottom:14px;">Próximos a você</div>
+
+            <div style="background:white;border-radius:18px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 10px rgba(26,122,106,0.07);">
+              <div style="width:54px;height:54px;background:linear-gradient(135deg,#FEF0E6,#FDDBC0);border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;">⛪</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:17px;font-weight:800;color:#1A2421;">Cristo Protetor</div>
+                <div style="font-size:13px;color:#5A7A70;margin-top:2px;">Monumento · 2,1km</div>
+                <div style="margin-top:7px;"><span style="background:#FFF0E8;color:#E8834A;border-radius:10px;padding:3px 9px;font-size:11px;font-weight:800;">+120 pts</span></div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D4" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </div>
+
+            <div style="background:white;border-radius:18px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 10px rgba(26,122,106,0.07);">
+              <div style="width:54px;height:54px;background:linear-gradient(135deg,#F0EBF8,#DDD0F4);border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;">🏛️</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:17px;font-weight:800;color:#1A2421;">Museu do Imigrante</div>
+                <div style="font-size:13px;color:#5A7A70;margin-top:2px;">Cultura · 1,8km</div>
+                <div style="margin-top:7px;"><span style="background:#F0F8F5;color:#1A7A6A;border-radius:10px;padding:3px 9px;font-size:11px;font-weight:800;">+100 pts</span></div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D4" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </div>
+
+            <div style="background:white;border-radius:18px;padding:14px 16px;margin-bottom:28px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 10px rgba(26,122,106,0.07);">
+              <div style="width:54px;height:54px;background:linear-gradient(135deg,#FFF8E0,#FFE8A0);border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;">🍷</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:17px;font-weight:800;color:#1A2421;">Cantina Valduga</div>
+                <div style="font-size:13px;color:#5A7A70;margin-top:2px;">Gastronomia · 3,4km</div>
+                <div style="margin-top:7px;"><span style="background:#FFF8E8;color:#C8820A;border-radius:10px;padding:3px 9px;font-size:11px;font-weight:800;">+80 pts</span></div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D4" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ══════════════════════ QR CODE ══════════════════════ -->
+      <sc-if value="{{ isQr }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;background:#1A2421;">
+          <div style="padding-top:74px;padding-bottom:28px;display:flex;flex-direction:column;align-items:center;">
+            <div style="font-size:25px;font-weight:900;color:white;margin-bottom:4px;">Escanear Local</div>
+            <div style="font-size:15px;color:rgba(255,255,255,0.5);margin-bottom:28px;">Aponte para o QR Code do local</div>
+
+            <!-- Scanner viewfinder -->
+            <div style="position:relative;width:262px;height:262px;">
+              <div style="position:absolute;inset:0;background:rgba(168,216,196,0.05);border-radius:18px;"></div>
+              <!-- Corners -->
+              <div style="position:absolute;top:0;left:0;width:36px;height:36px;border-top:3.5px solid #1A7A6A;border-left:3.5px solid #1A7A6A;border-radius:6px 0 0 0;"></div>
+              <div style="position:absolute;top:0;right:0;width:36px;height:36px;border-top:3.5px solid #1A7A6A;border-right:3.5px solid #1A7A6A;border-radius:0 6px 0 0;"></div>
+              <div style="position:absolute;bottom:0;left:0;width:36px;height:36px;border-bottom:3.5px solid #1A7A6A;border-left:3.5px solid #1A7A6A;border-radius:0 0 0 6px;"></div>
+              <div style="position:absolute;bottom:0;right:0;width:36px;height:36px;border-bottom:3.5px solid #1A7A6A;border-right:3.5px solid #1A7A6A;border-radius:0 0 6px 0;"></div>
+              <!-- QR decorative -->
+              <div style="display:flex;align-items:center;justify-content:center;height:100%;">
+                <svg viewBox="0 0 100 100" width="160" height="160">
+                  <rect x="5" y="5" width="30" height="30" rx="3" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2"/>
+                  <rect x="11" y="11" width="18" height="18" rx="1.5" fill="rgba(255,255,255,0.75)"/>
+                  <rect x="65" y="5" width="30" height="30" rx="3" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2"/>
+                  <rect x="71" y="11" width="18" height="18" rx="1.5" fill="rgba(255,255,255,0.75)"/>
+                  <rect x="5" y="65" width="30" height="30" rx="3" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2"/>
+                  <rect x="11" y="71" width="18" height="18" rx="1.5" fill="rgba(255,255,255,0.75)"/>
+                  <rect x="40" y="5" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="47" y="5" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="54" y="5" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="47" y="12" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="5" y="40" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="12" y="40" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="5" y="47" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="19" y="47" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="5" y="54" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="40" y="40" width="20" height="20" fill="rgba(255,255,255,0.8)" rx="2"/>
+                  <rect x="44" y="44" width="12" height="12" fill="#1A2421" rx="1"/>
+                  <rect x="47" y="47" width="6" height="6" fill="rgba(255,255,255,0.9)" rx="0.5"/>
+                  <rect x="65" y="40" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="72" y="40" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="79" y="40" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="86" y="47" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="65" y="54" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="40" y="65" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="54" y="65" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="47" y="72" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="40" y="79" width="5" height="5" fill="rgba(255,255,255,0.65)" rx="0.5"/>
+                  <rect x="68" y="65" width="27" height="12" fill="rgba(255,255,255,0.65)" rx="1"/>
+                  <rect x="68" y="80" width="12" height="15" fill="rgba(255,255,255,0.65)" rx="1"/>
+                  <rect x="83" y="80" width="12" height="15" fill="rgba(255,255,255,0.65)" rx="1"/>
+                </svg>
+              </div>
+              <!-- Scan beam (only when scanning) -->
+              <sc-if value="{{ scanning }}">
+                <div style="position:absolute;top:0;left:10px;right:10px;height:2px;background:linear-gradient(90deg,transparent 0%,#1A7A6A 30%,#A8DCC8 50%,#1A7A6A 70%,transparent 100%);border-radius:1px;animation:scanBeam 1.4s ease-in-out infinite;box-shadow:0 0 10px rgba(26,122,106,0.9);"></div>
+              </sc-if>
+            </div>
+
+            <!-- Status text -->
+            <div style="margin-top:20px;min-height:44px;display:flex;align-items:center;justify-content:center;padding:0 40px;text-align:center;">
+              <sc-if value="{{ scanning }}">
+                <div style="font-size:15px;color:#A8DCC8;font-weight:700;">Lendo código...</div>
+              </sc-if>
+              <sc-if value="{{ notScanning }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:15px;color:rgba(255,255,255,0.45);line-height:1.55;">Posicione o QR Code dentro<br>da área destacada</div>
+              </sc-if>
+            </div>
+
+            <!-- Simulate button -->
+            <div style="width:100%;padding:12px 20px;box-sizing:border-box;">
+              <div onClick="{{ startScan }}" style="background:#1A7A6A;border-radius:16px;padding:16px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 4px 16px rgba(26,122,106,0.42);">
+                <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="12" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="2" y="12" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="4" y="4" width="4" height="4" fill="white"/><rect x="14" y="4" width="4" height="4" fill="white"/><rect x="4" y="14" width="4" height="4" fill="white"/><rect x="13" y="13" width="2" height="2" fill="white"/><rect x="17" y="13" width="2" height="2" fill="white"/><rect x="13" y="17" width="2" height="2" fill="white"/><rect x="17" y="17" width="2" height="2" fill="white"/><rect x="15" y="15" width="2" height="2" fill="white"/></svg>
+                <span style="font-size:16px;font-weight:800;color:white;">Simular: Jardim dos Sentidos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recently scanned -->
+          <div style="padding:0 20px 28px;">
+            <div style="font-size:16px;font-weight:800;color:rgba(255,255,255,0.45);margin-bottom:12px;">Escaneados recentemente</div>
+            <div style="background:rgba(255,255,255,0.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+              <div style="width:42px;height:42px;background:#1A7A6A;border-radius:21px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⛪</div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;color:white;">Cristo Protetor</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">Ontem · 10h30</div>
+              </div>
+              <span style="background:rgba(26,122,106,0.4);color:#A8DCC8;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:800;">+120 pts</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ══════════════════════ PONTOS ══════════════════════ -->
+      <sc-if value="{{ isPontos }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;background:#F5FAF8;">
+          <!-- Passport header -->
+          <div style="background:linear-gradient(155deg,#1A7A6A 0%,#0C5244 100%);padding:70px 24px 28px;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:rgba(255,255,255,0.04);border-radius:100px;"></div>
+            <div style="position:absolute;top:30px;right:30px;width:110px;height:110px;background:rgba(255,255,255,0.04);border-radius:55px;"></div>
+            <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,0.55);letter-spacing:2.5px;text-transform:uppercase;">PASSAPORTE ENCANTADO</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;margin-top:10px;">
+              <div style="font-size:68px;font-weight:900;color:white;line-height:1;">320</div>
+              <div style="font-size:21px;font-weight:700;color:rgba(255,255,255,0.7);padding-bottom:11px;">pontos</div>
+            </div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:3px;">Ana Silva · 2 locais visitados</div>
+            <div style="margin-top:20px;background:rgba(0,0,0,0.18);border-radius:16px;padding:14px 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span style="font-size:13px;font-weight:700;color:white;">🎫 Ingresso Grátis ao Museu</span>
+                <span style="font-size:12px;color:rgba(255,255,255,0.55);font-weight:700;">2 / 5</span>
+              </div>
+              <div style="height:7px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden;">
+                <div style="width:40%;height:100%;background:#E8834A;border-radius:4px;"></div>
+              </div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:6px;">3 locais para desbloquear</div>
+            </div>
+          </div>
+
+          <!-- Rewards -->
+          <div style="padding:20px 16px 8px;">
+            <div style="font-size:19px;font-weight:900;color:#1A2421;margin-bottom:14px;">Recompensas</div>
+
+            <div style="background:white;border-radius:20px;padding:18px;margin-bottom:12px;box-shadow:0 2px 12px rgba(26,122,106,0.08);">
+              <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px;">
+                <div style="width:56px;height:56px;background:linear-gradient(135deg,#EEF5FF,#D0E4FF);border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;">🎫</div>
+                <div style="flex:1;">
+                  <div style="font-size:16px;font-weight:800;color:#1A2421;">Ingresso Grátis</div>
+                  <div style="font-size:13px;color:#5A7A70;margin-top:2px;">Museu do Imigrante</div>
+                </div>
+                <div style="background:#F0FAF7;border-radius:12px;padding:8px 12px;text-align:center;">
+                  <div style="font-size:20px;font-weight:900;color:#1A7A6A;line-height:1;">5</div>
+                  <div style="font-size:10px;color:#5A7A70;font-weight:700;">locais</div>
+                </div>
+              </div>
+              <div style="height:6px;background:#EEF4F2;border-radius:3px;overflow:hidden;">
+                <div style="width:40%;height:100%;background:linear-gradient(90deg,#1A7A6A,#E8834A);border-radius:3px;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                <span style="font-size:12px;color:#5A7A70;">2 de 5 locais visitados</span>
+                <span style="font-size:12px;color:#1A7A6A;font-weight:800;">40%</span>
+              </div>
+            </div>
+
+            <div style="background:white;border-radius:20px;padding:18px;margin-bottom:20px;box-shadow:0 2px 12px rgba(26,122,106,0.08);">
+              <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px;">
+                <div style="width:56px;height:56px;background:linear-gradient(135deg,#FFF3E0,#FFE0B0);border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;">💰</div>
+                <div style="flex:1;">
+                  <div style="font-size:16px;font-weight:800;color:#1A2421;">Desconto de 20%</div>
+                  <div style="font-size:13px;color:#5A7A70;margin-top:2px;">Em qualquer loja parceira</div>
+                </div>
+                <div style="background:#FFF3E8;border-radius:12px;padding:8px 12px;text-align:center;">
+                  <div style="font-size:20px;font-weight:900;color:#E8834A;line-height:1;">500</div>
+                  <div style="font-size:10px;color:#C8703A;font-weight:700;">pontos</div>
+                </div>
+              </div>
+              <div style="height:6px;background:#EEF4F2;border-radius:3px;overflow:hidden;">
+                <div style="width:64%;height:100%;background:linear-gradient(90deg,#E8834A,#F5B070);border-radius:3px;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                <span style="font-size:12px;color:#5A7A70;">320 de 500 pontos</span>
+                <span style="font-size:12px;color:#E8834A;font-weight:800;">64%</span>
+              </div>
+            </div>
+
+            <!-- History -->
+            <div style="font-size:19px;font-weight:900;color:#1A2421;margin-bottom:12px;">Histórico</div>
+
+            <div style="background:white;border-radius:16px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(26,122,106,0.06);">
+              <div style="width:44px;height:44px;background:#E8F7F4;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🌸</div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;color:#1A2421;">Jardim dos Sentidos</div>
+                <div style="font-size:12px;color:#5A7A70;margin-top:1px;">Hoje · 14h22</div>
+              </div>
+              <span style="font-size:17px;font-weight:900;color:#1A7A6A;">+150</span>
+            </div>
+
+            <div style="background:white;border-radius:16px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(26,122,106,0.06);">
+              <div style="width:44px;height:44px;background:#FEF0E6;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">⛪</div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;color:#1A2421;">Cristo Protetor</div>
+                <div style="font-size:12px;color:#5A7A70;margin-top:1px;">Ontem · 10h30</div>
+              </div>
+              <span style="font-size:17px;font-weight:900;color:#1A7A6A;">+120</span>
+            </div>
+
+            <div style="background:white;border-radius:16px;padding:14px 16px;margin-bottom:28px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(26,122,106,0.06);">
+              <div style="width:44px;height:44px;background:#F0EBF8;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🌟</div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;color:#1A2421;">Bônus de boas-vindas</div>
+                <div style="font-size:12px;color:#5A7A70;margin-top:1px;">Ontem · Primeiro check-in</div>
+              </div>
+              <span style="font-size:17px;font-weight:900;color:#1A7A6A;">+50</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ══════════════════════ BADGES ══════════════════════ -->
+      <sc-if value="{{ isBadges }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;background:#F5FAF8;">
+          <div style="padding:70px 20px 18px;background:white;border-bottom:1px solid #EAF2EF;">
+            <div style="font-size:26px;font-weight:900;color:#1A2421;">Conquistas</div>
+            <div style="font-size:14px;color:#5A7A70;margin-top:4px;">3 de 12 desbloqueadas</div>
+            <div style="margin-top:12px;height:6px;background:#EEF4F2;border-radius:3px;overflow:hidden;">
+              <div style="width:25%;height:100%;background:linear-gradient(90deg,#1A7A6A,#E8834A);border-radius:3px;"></div>
+            </div>
+          </div>
+
+          <!-- Filter -->
+          <div style="display:flex;gap:8px;padding:14px 16px;overflow-x:auto;">
+            <div style="background:#1A7A6A;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;"><span style="font-size:13px;font-weight:700;color:white;">Todos</span></div>
+            <div style="background:white;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.08);"><span style="font-size:13px;font-weight:700;color:#5A7A70;">Natureza</span></div>
+            <div style="background:white;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.08);"><span style="font-size:13px;font-weight:700;color:#5A7A70;">Cultura</span></div>
+            <div style="background:white;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.08);"><span style="font-size:13px;font-weight:700;color:#5A7A70;">Gastronomia</span></div>
+          </div>
+
+          <!-- Badge grid -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:4px 20px 28px;">
+
+            <!-- Unlocked: Chegada Mágica -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="position:relative;width:76px;height:76px;">
+                <div style="width:76px;height:76px;border-radius:38px;background:linear-gradient(135deg,#E8F7F4,#C8EDE6);border:2.5px solid #1A7A6A;display:flex;align-items:center;justify-content:center;font-size:32px;">🌟</div>
+                <div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;background:#1A7A6A;border-radius:11px;border:2px solid white;display:flex;align-items:center;justify-content:center;"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </div>
+              <div style="font-size:11px;font-weight:800;color:#1A2421;text-align:center;line-height:1.3;">Chegada<br>Mágica</div>
+            </div>
+
+            <!-- Unlocked: Jardim dos Sentidos -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="position:relative;width:76px;height:76px;">
+                <div style="width:76px;height:76px;border-radius:38px;background:linear-gradient(135deg,#F4F0F8,#E0D0F4);border:2.5px solid #7C5CBF;display:flex;align-items:center;justify-content:center;font-size:32px;">🌸</div>
+                <div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;background:#1A7A6A;border-radius:11px;border:2px solid white;display:flex;align-items:center;justify-content:center;"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </div>
+              <div style="font-size:11px;font-weight:800;color:#1A2421;text-align:center;line-height:1.3;">Jardim dos<br>Sentidos</div>
+            </div>
+
+            <!-- Unlocked: Escalador -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="position:relative;width:76px;height:76px;">
+                <div style="width:76px;height:76px;border-radius:38px;background:linear-gradient(135deg,#FEF0E6,#FDDBC0);border:2.5px solid #E8834A;display:flex;align-items:center;justify-content:center;font-size:32px;">⛪</div>
+                <div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;background:#1A7A6A;border-radius:11px;border:2px solid white;display:flex;align-items:center;justify-content:center;"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </div>
+              <div style="font-size:11px;font-weight:800;color:#1A2421;text-align:center;line-height:1.3;">Escalador<br>do Cristo</div>
+            </div>
+
+            <!-- Locked badges -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="width:76px;height:76px;border-radius:38px;background:#EAEFED;border:2.5px solid #D0DAD8;display:flex;align-items:center;justify-content:center;font-size:32px;filter:grayscale(1);opacity:0.42;">🏛️</div>
+              <div style="font-size:11px;font-weight:700;color:#9CBAAD;text-align:center;line-height:1.3;">Historiador</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="width:76px;height:76px;border-radius:38px;background:#EAEFED;border:2.5px solid #D0DAD8;display:flex;align-items:center;justify-content:center;font-size:32px;filter:grayscale(1);opacity:0.42;">🍷</div>
+              <div style="font-size:11px;font-weight:700;color:#9CBAAD;text-align:center;line-height:1.3;">Mesa<br>Gaúcha</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="width:76px;height:76px;border-radius:38px;background:#EAEFED;border:2.5px solid #D0DAD8;display:flex;align-items:center;justify-content:center;font-size:32px;filter:grayscale(1);opacity:0.42;">🎖️</div>
+              <div style="font-size:11px;font-weight:700;color:#9CBAAD;text-align:center;line-height:1.3;">Passaporte<br>Completo</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="width:76px;height:76px;border-radius:38px;background:#EAEFED;border:2.5px solid #D0DAD8;display:flex;align-items:center;justify-content:center;font-size:32px;filter:grayscale(1);opacity:0.42;">📷</div>
+              <div style="font-size:11px;font-weight:700;color:#9CBAAD;text-align:center;line-height:1.3;">Fotógrafo</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="width:76px;height:76px;border-radius:38px;background:#EAEFED;border:2.5px solid #D0DAD8;display:flex;align-items:center;justify-content:center;font-size:32px;filter:grayscale(1);opacity:0.42;">☕</div>
+              <div style="font-size:11px;font-weight:700;color:#9CBAAD;text-align:center;line-height:1.3;">Gaúcho de<br>Coração</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="width:76px;height:76px;border-radius:38px;background:#EAEFED;border:2.5px solid #D0DAD8;display:flex;align-items:center;justify-content:center;font-size:32px;filter:grayscale(1);opacity:0.42;">🌅</div>
+              <div style="font-size:11px;font-weight:700;color:#9CBAAD;text-align:center;line-height:1.3;">Madrugador</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ══════════════════════ PERFIL ══════════════════════ -->
+      <sc-if value="{{ isPerfil }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;background:#F5FAF8;">
+          <!-- User card -->
+          <div style="background:linear-gradient(155deg,#1A7A6A,#0C5244);padding:70px 20px 24px;text-align:center;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-30px;left:-30px;width:160px;height:160px;background:rgba(255,255,255,0.04);border-radius:80px;"></div>
+            <div style="width:82px;height:82px;border-radius:41px;background:linear-gradient(135deg,#E8834A,#C96020);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:white;margin:0 auto 12px;border:3px solid rgba(255,255,255,0.25);">AS</div>
+            <div style="font-size:23px;font-weight:900;color:white;">Ana Silva</div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.58);margin-top:4px;">📍 Encantado, RS</div>
+            <div style="display:flex;justify-content:center;margin-top:20px;background:rgba(0,0,0,0.16);border-radius:16px;padding:14px 0;">
+              <div style="flex:1;text-align:center;border-right:1px solid rgba(255,255,255,0.1);">
+                <div style="font-size:24px;font-weight:900;color:white;">2</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.55);font-weight:600;margin-top:2px;">Locais</div>
+              </div>
+              <div style="flex:1;text-align:center;border-right:1px solid rgba(255,255,255,0.1);">
+                <div style="font-size:24px;font-weight:900;color:white;">320</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.55);font-weight:600;margin-top:2px;">Pontos</div>
+              </div>
+              <div style="flex:1;text-align:center;">
+                <div style="font-size:24px;font-weight:900;color:white;">3</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.55);font-weight:600;margin-top:2px;">Badges</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Roteiro -->
+          <div style="margin:16px;">
+            <div style="background:linear-gradient(135deg,#1A7A6A 0%,#C86828 100%);border-radius:22px;padding:20px;color:white;box-shadow:0 4px 18px rgba(26,122,106,0.25);">
+              <div style="font-size:11px;font-weight:800;letter-spacing:0.8px;opacity:0.75;text-transform:uppercase;margin-bottom:6px;">✨ IA · Roteiro personalizado</div>
+              <div style="font-size:19px;font-weight:900;margin-bottom:12px;">Seu dia em Encantado</div>
+              <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:14px;">
+                <div style="font-size:13px;opacity:0.9;display:flex;gap:8px;align-items:center;"><span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:2px 8px;font-size:11px;font-weight:800;flex-shrink:0;">09h</span>Jardim dos Sentidos</div>
+                <div style="font-size:13px;opacity:0.9;display:flex;gap:8px;align-items:center;"><span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:2px 8px;font-size:11px;font-weight:800;flex-shrink:0;">11h</span>Cristo Protetor</div>
+                <div style="font-size:13px;opacity:0.9;display:flex;gap:8px;align-items:center;"><span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:2px 8px;font-size:11px;font-weight:800;flex-shrink:0;">14h</span>Cantina Valduga</div>
+                <div style="font-size:13px;opacity:0.9;display:flex;gap:8px;align-items:center;"><span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:2px 8px;font-size:11px;font-weight:800;flex-shrink:0;">16h</span>Museu do Imigrante</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.15);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:700;">💰 Economize até R$25 com seus pontos hoje!</div>
+            </div>
+          </div>
+
+          <!-- Accessibility -->
+          <div style="margin:0 16px 12px;">
+            <div style="background:white;border-radius:20px;padding:18px;box-shadow:0 2px 10px rgba(26,122,106,0.06);">
+              <div style="font-size:17px;font-weight:900;color:#1A2421;margin-bottom:14px;">Acessibilidade</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:13px;border-bottom:1px solid #F0F4F2;margin-bottom:13px;">
+                <div><div style="font-size:16px;font-weight:700;color:#1A2421;">Texto grande</div><div style="font-size:12px;color:#5A7A70;margin-top:1px;">Aumenta o tamanho das fontes</div></div>
+                <div style="width:48px;height:28px;background:#1A7A6A;border-radius:14px;position:relative;flex-shrink:0;"><div style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:white;border-radius:11px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:13px;border-bottom:1px solid #F0F4F2;margin-bottom:13px;">
+                <div><div style="font-size:16px;font-weight:700;color:#1A2421;">Rota acessível</div><div style="font-size:12px;color:#5A7A70;margin-top:1px;">Apenas locais para cadeirantes</div></div>
+                <div style="width:48px;height:28px;background:#1A7A6A;border-radius:14px;position:relative;flex-shrink:0;"><div style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:white;border-radius:11px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <div><div style="font-size:16px;font-weight:700;color:#1A2421;">Alto contraste</div><div style="font-size:12px;color:#5A7A70;margin-top:1px;">Para baixa visão</div></div>
+                <div style="width:48px;height:28px;background:#D0DAD8;border-radius:14px;position:relative;flex-shrink:0;"><div style="position:absolute;top:3px;left:3px;width:22px;height:22px;background:white;border-radius:11px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings -->
+          <div style="margin:0 16px 28px;">
+            <div style="background:white;border-radius:20px;padding:4px 0;box-shadow:0 2px 10px rgba(26,122,106,0.06);">
+              <div style="padding:14px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F0F4F2;">
+                <div style="width:36px;height:36px;background:#E8F7F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;">🔔</div>
+                <div style="flex:1;font-size:16px;font-weight:700;color:#1A2421;">Notificações</div>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D4" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div style="padding:14px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F0F4F2;">
+                <div style="width:36px;height:36px;background:#E8F7F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;">🌐</div>
+                <div style="flex:1;font-size:16px;font-weight:700;color:#1A2421;">Idioma</div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:13px;color:#5A7A70;font-weight:600;">Português</span><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D4" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </div>
+              <div style="padding:14px 18px;display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;background:#FEF0E6;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;">📤</div>
+                <div style="flex:1;font-size:16px;font-weight:700;color:#E8834A;">Compartilhar app</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ══════════════════════ FAIRY FAB ══════════════════════ -->
+      <div style="position:absolute;bottom:96px;right:16px;z-index:55;animation:floatFairy 3.2s ease-in-out infinite;cursor:pointer;">
+        <div style="width:56px;height:56px;background:linear-gradient(145deg,#1E8C7A,#1A7A6A);border-radius:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(26,122,106,0.48),0 2px 6px rgba(0,0,0,0.18);">
+          <svg viewBox="0 0 36 42" width="30" height="35">
+            <ellipse cx="10" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(-28,10,24)"/>
+            <ellipse cx="26" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(28,26,24)"/>
+            <ellipse cx="18" cy="32" rx="5" ry="6.5" fill="#E8F7F4"/>
+            <circle cx="18" cy="17" r="7" fill="#F5C8A0"/>
+            <ellipse cx="18" cy="13" rx="7" ry="3.8" fill="#7A3C1A"/>
+            <path d="M11 15 Q18 8 25 15" fill="#7A3C1A"/>
+            <circle cx="15.5" cy="16" r="1.6" fill="#1A2421"/>
+            <circle cx="20.5" cy="16" r="1.6" fill="#1A2421"/>
+            <circle cx="16.2" cy="15.3" r="0.5" fill="white"/>
+            <circle cx="21.2" cy="15.3" r="0.5" fill="white"/>
+            <circle cx="12.5" cy="18.5" r="2.2" fill="#E8834A" opacity="0.26"/>
+            <circle cx="23.5" cy="18.5" r="2.2" fill="#E8834A" opacity="0.26"/>
+            <path d="M15 20 Q18 23 21 20" stroke="#9B4F20" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <line x1="24" y1="23" x2="31" y2="16" stroke="#E8834A" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="31" cy="16" r="3.5" fill="#E8834A"/>
+            <circle cx="31" cy="16" r="1.8" fill="white" opacity="0.55"/>
+            <line x1="15" y1="11" x2="12" y2="6" stroke="#7A3C1A" stroke-width="1.1" stroke-linecap="round"/>
+            <circle cx="12" cy="5.5" r="1.8" fill="#E8834A"/>
+            <line x1="21" y1="11" x2="24" y2="6" stroke="#7A3C1A" stroke-width="1.1" stroke-linecap="round"/>
+            <circle cx="24" cy="5.5" r="1.8" fill="#E8834A"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════ TAB BAR ══════════════════════ -->
+      <div style="position:absolute;bottom:0;left:0;right:0;height:83px;background:white;border-top:1px solid #E8F0EE;z-index:50;display:flex;align-items:flex-start;padding-top:8px;box-sizing:border-box;">
+
+        <div onClick="{{ goLocais }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M9 4L3 7.5V19l6-3 6 3 6-3V4.5l-6 3-6-3z" stroke="{{ cLocais }}" stroke-width="1.8" stroke-linejoin="round"/>
+            <line x1="9" y1="4" x2="9" y2="16" stroke="{{ cLocais }}" stroke-width="1.8"/>
+            <line x1="15" y1="7.5" x2="15" y2="19.5" stroke="{{ cLocais }}" stroke-width="1.8"/>
+          </svg>
+          <span style="font-size:10px;font-weight:{{ wLocais }};color:{{ cLocais }};">Locais</span>
+        </div>
+
+        <div onClick="{{ goPontos }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l3.1 6.3 7 1-5 4.9 1.2 6.9L12 17.8l-6.3 3.3L7 14.2 2 9.3l7-1L12 2z" stroke="{{ cPontos }}" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <span style="font-size:10px;font-weight:{{ wPontos }};color:{{ cPontos }};">Pontos</span>
+        </div>
+
+        <div onClick="{{ goQr }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;margin-top:-18px;">
+          <div style="width:52px;height:52px;background:#1A7A6A;border-radius:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(26,122,106,0.42),0 2px 4px rgba(0,0,0,0.1);border:3px solid white;">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <rect x="2" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/>
+              <rect x="12" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/>
+              <rect x="2" y="12" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/>
+              <rect x="4" y="4" width="4" height="4" fill="white"/>
+              <rect x="14" y="4" width="4" height="4" fill="white"/>
+              <rect x="4" y="14" width="4" height="4" fill="white"/>
+              <rect x="13" y="13" width="2" height="2" fill="white"/>
+              <rect x="17" y="13" width="2" height="2" fill="white"/>
+              <rect x="13" y="17" width="2" height="2" fill="white"/>
+              <rect x="17" y="17" width="2" height="2" fill="white"/>
+              <rect x="15" y="15" width="2" height="2" fill="white"/>
+            </svg>
+          </div>
+          <span style="font-size:10px;font-weight:{{ wQr }};color:{{ cQr }};">QR Code</span>
+        </div>
+
+        <div onClick="{{ goBadges }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M8 21h8M12 17v4" stroke="{{ cBadges }}" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M5 3h14L17 11A5 5 0 017 11L5 3z" stroke="{{ cBadges }}" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M5 6H3a2 2 0 000 4h2M19 6h2a2 2 0 010 4h-2" stroke="{{ cBadges }}" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span style="font-size:10px;font-weight:{{ wBadges }};color:{{ cBadges }};">Badges</span>
+        </div>
+
+        <div onClick="{{ goPerfil }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="8" r="4" stroke="{{ cPerfil }}" stroke-width="1.8"/>
+            <path d="M4 20c0-3.5 3.6-6 8-6s8 2.5 8 6" stroke="{{ cPerfil }}" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span style="font-size:10px;font-weight:{{ wPerfil }};color:{{ cPerfil }};">Perfil</span>
+        </div>
+      </div>
+
+      <!-- ══════════════════════ QR SUCCESS OVERLAY ══════════════════════ -->
+      <sc-if value="{{ showQrSuccess }}">
+        <div style="position:absolute;inset:0;z-index:200;background:rgba(8,26,20,0.9);display:flex;align-items:flex-end;" onClick="{{ closeSuccess }}">
+          <div style="background:white;border-radius:28px 28px 0 0;padding:28px 24px 36px;width:100%;box-sizing:border-box;animation:bounceIn 0.45s cubic-bezier(.34,1.56,.64,1) both;">
+
+            <!-- Fairy -->
+            <div style="text-align:center;margin-bottom:10px;">
+              <div style="display:inline-flex;align-items:center;justify-content:center;width:84px;height:84px;background:linear-gradient(145deg,#E4F5F0,#C4EBE0);border-radius:42px;animation:floatFairy 3s ease-in-out infinite;">
+                <svg viewBox="0 0 36 42" width="52" height="58">
+                  <ellipse cx="10" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(-28,10,24)"/>
+                  <ellipse cx="26" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(28,26,24)"/>
+                  <ellipse cx="18" cy="32" rx="5" ry="6.5" fill="#E8F7F4"/>
+                  <circle cx="18" cy="17" r="7" fill="#F5C8A0"/>
+                  <ellipse cx="18" cy="13" rx="7" ry="3.8" fill="#7A3C1A"/>
+                  <path d="M11 15 Q18 8 25 15" fill="#7A3C1A"/>
+                  <circle cx="15.5" cy="16" r="1.6" fill="#1A2421"/>
+                  <circle cx="20.5" cy="16" r="1.6" fill="#1A2421"/>
+                  <circle cx="16.2" cy="15.3" r="0.5" fill="white"/>
+                  <circle cx="21.2" cy="15.3" r="0.5" fill="white"/>
+                  <circle cx="12.5" cy="18.5" r="2.2" fill="#E8834A" opacity="0.3"/>
+                  <circle cx="23.5" cy="18.5" r="2.2" fill="#E8834A" opacity="0.3"/>
+                  <path d="M15 20 Q18 23 21 20" stroke="#9B4F20" stroke-width="1" fill="none" stroke-linecap="round"/>
+                  <line x1="24" y1="23" x2="31" y2="16" stroke="#E8834A" stroke-width="1.6" stroke-linecap="round"/>
+                  <circle cx="31" cy="16" r="3.5" fill="#E8834A"/>
+                  <circle cx="31" cy="16" r="1.8" fill="white" opacity="0.55"/>
+                  <line x1="15" y1="11" x2="12" y2="6" stroke="#7A3C1A" stroke-width="1.1" stroke-linecap="round"/>
+                  <circle cx="12" cy="5.5" r="1.8" fill="#E8834A"/>
+                  <line x1="21" y1="11" x2="24" y2="6" stroke="#7A3C1A" stroke-width="1.1" stroke-linecap="round"/>
+                  <circle cx="24" cy="5.5" r="1.8" fill="#E8834A"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Welcome -->
+            <div style="text-align:center;margin-bottom:18px;">
+              <div style="font-size:14px;color:#5A7A70;font-weight:700;margin-bottom:4px;">Que delícia! Você está no</div>
+              <div style="font-size:24px;font-weight:900;color:#1A2421;line-height:1.2;">Jardim dos Sentidos 🌸</div>
+              <div style="font-size:14px;color:#5A7A70;margin-top:7px;line-height:1.5;">Explore os aromas, cores e texturas<br>desta experiência única.</div>
+            </div>
+
+            <!-- Points earned -->
+            <div style="background:linear-gradient(135deg,#1A7A6A,#0C5244);border-radius:16px;padding:14px 18px;margin-bottom:12px;display:flex;align-items:center;gap:12px;animation:popStar 0.4s 0.2s both;">
+              <div style="font-size:34px;">⭐</div>
+              <div style="flex:1;">
+                <div style="font-size:13px;color:rgba(255,255,255,0.7);font-weight:600;">Você ganhou</div>
+                <div style="font-size:28px;font-weight:900;color:white;line-height:1.1;">+150 pontos!</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.14);border-radius:12px;padding:8px 12px;text-align:center;">
+                <div style="font-size:17px;font-weight:900;color:white;line-height:1;">320</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.6);font-weight:600;">total</div>
+              </div>
+            </div>
+
+            <!-- Discount -->
+            <div style="background:#FFF5EF;border:1.5px dashed #E8834A;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+              <div style="font-size:28px;">🏷️</div>
+              <div>
+                <div style="font-size:19px;font-weight:900;color:#E8834A;">15% de desconto</div>
+                <div style="font-size:13px;color:#A06040;margin-top:2px;">Válido hoje na loja do jardim</div>
+              </div>
+            </div>
+
+            <!-- Progress -->
+            <div style="background:#F0F7F5;border-radius:14px;padding:12px 16px;margin-bottom:20px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:13px;font-weight:700;color:#1A2421;">Ingresso Grátis ao Museu</span>
+                <span style="font-size:12px;color:#1A7A6A;font-weight:800;">2/5</span>
+              </div>
+              <div style="height:6px;background:#D4E8E2;border-radius:3px;overflow:hidden;">
+                <div style="width:40%;height:100%;background:linear-gradient(90deg,#1A7A6A,#E8834A);border-radius:3px;"></div>
+              </div>
+              <div style="font-size:12px;color:#5A7A70;margin-top:5px;">3 locais para ganhar ingresso grátis!</div>
+            </div>
+
+            <!-- CTA -->
+            <div onClick="{{ closeSuccess }}" style="background:#1A7A6A;border-radius:16px;padding:16px;text-align:center;cursor:pointer;box-shadow:0 4px 14px rgba(26,122,106,0.38);">
+              <span style="font-size:17px;font-weight:900;color:white;">Ver meu passaporte →</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 500, &quot;height&quot;: 960}}">
+class Component extends DCLogic {
+  state = { activeTab: 'locais', showQrSuccess: false, scanning: false };
+
+  renderVals() {
+    const { activeTab, showQrSuccess, scanning } = this.state;
+    const a = (t) => activeTab === t;
+    const c = (t) => a(t) ? '#1A7A6A' : '#9CBAAD';
+    const w = (t) => a(t) ? '800' : '500';
+    return {
+      isLocais: a('locais'), isQr: a('qr'), isPontos: a('pontos'),
+      isBadges: a('badges'), isPerfil: a('perfil'),
+      showQrSuccess, scanning, notScanning: !scanning,
+      cLocais: c('locais'), wLocais: w('locais'),
+      cQr:     c('qr'),     wQr:     w('qr'),
+      cPontos: c('pontos'), wPontos: w('pontos'),
+      cBadges: c('badges'), wBadges: w('badges'),
+      cPerfil: c('perfil'), wPerfil: w('perfil'),
+      goLocais: () => this.setState({ activeTab: 'locais' }),
+      goQr:     () => this.setState({ activeTab: 'qr' }),
+      goPontos: () => this.setState({ activeTab: 'pontos' }),
+      goBadges: () => this.setState({ activeTab: 'badges' }),
+      goPerfil: () => this.setState({ activeTab: 'perfil' }),
+      startScan: () => {
+        if (this.state.scanning) return;
+        this.setState({ scanning: true });
+        setTimeout(() => this.setState({ scanning: false, showQrSuccess: true }), 2400);
+      },
+      closeSuccess: () => this.setState({ showQrSuccess: false, activeTab: 'pontos' })
+    };
+  }
+}
+</script>
+</body>
+</html>

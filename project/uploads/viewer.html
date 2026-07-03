@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><body style="margin:0;background:#111;display:flex;flex-wrap:wrap;gap:4px;padding:4px">
+<script>
+var base = 'https://0651669b-fa24-4be7-847a-4f91dc7de068.claudeusercontent.com/v1/design/projects/0651669b-fa24-4be7-847a-4f91dc7de068/serve/uploads/';
+var files = [
+  'Pa\u0301gina inicial para app turi\u0301stico.jpg',
+  'Pa\u0301gina inicial para app turi\u0301stico-1.jpg',
+  'Pa\u0301gina inicial para app turi\u0301stico-2.jpg',
+  'Pa\u0301gina inicial para app turi\u0301stico-3.jpg',
+  'Pa\u0301gina inicial para app turi\u0301stico-4.jpg',
+  'Pa\u0301gina inicial para app turi\u0301stico-5.jpg',
+  'Pa\u0301gina inicial para app turi\u0301stico-6.jpg',
+  'Pa\u0301gina inicial para app turi\u0301stico-7.jpg'
+];
+files.forEach(function(f) {
+  var img = document.createElement('img');
+  img.src = base + encodeURIComponent(f);
+  img.style.height = '680px';
+  document.body.appendChild(img);
+});
+</script>
+</body></html>

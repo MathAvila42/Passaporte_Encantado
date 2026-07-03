@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:#E8EFE8; padding:40px 20px; box-sizing:border-box; font-family:'Nunito',sans-serif; }
+    @keyframes floatFairy { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+    @keyframes scanBeam { 0%{top:4%} 100%{top:90%} }
+    @keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    ::-webkit-scrollbar { display:none; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+<div style="position:absolute;inset:0;font-family:'Nunito',sans-serif;overflow:hidden;">
+
+  <!-- ══════ EXPLORAR ══════ -->
+  <sc-if value="{{ isExplorar }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;overflow-y:auto;background:#fff;">
+
+      <!-- Green hero header -->
+      <div style="background:linear-gradient(180deg,#2A7A50 0%,#1E5E3C 100%);padding:58px 20px 0;position:relative;overflow:hidden;">
+        <!-- Decoration circles -->
+        <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:rgba(255,255,255,0.06);border-radius:90px;"></div>
+        <div style="position:absolute;top:10px;right:50px;width:80px;height:80px;background:rgba(255,255,255,0.05);border-radius:40px;"></div>
+
+        <!-- Top bar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.65);font-weight:700;letter-spacing:1px;text-transform:uppercase;">Bem-vindo ao</div>
+            <div style="font-size:22px;font-weight:900;color:white;line-height:1.1;">Passaporte Encantado</div>
+          </div>
+          <div style="width:38px;height:38px;background:rgba(255,255,255,0.15);border-radius:19px;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <!-- Hero photo card -->
+        <div style="border-radius:18px 18px 0 0;overflow:hidden;position:relative;height:178px;">
+          <svg viewBox="0 0 362 178" width="362" height="178" style="display:block;">
+            <defs>
+              <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#87CEEB"/>
+                <stop offset="100%" stop-color="#B8DFF0"/>
+              </linearGradient>
+              <linearGradient id="mtnG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4A8C5C"/>
+                <stop offset="100%" stop-color="#2D6A40"/>
+              </linearGradient>
+              <linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5B9EC9"/>
+                <stop offset="100%" stop-color="#3A7EA8"/>
+              </linearGradient>
+            </defs>
+            <!-- Sky -->
+            <rect width="362" height="178" fill="url(#skyG)"/>
+            <!-- Clouds -->
+            <ellipse cx="60" cy="35" rx="35" ry="14" fill="white" opacity="0.7"/>
+            <ellipse cx="85" cy="28" rx="28" ry="12" fill="white" opacity="0.8"/>
+            <ellipse cx="280" cy="25" rx="30" ry="11" fill="white" opacity="0.6"/>
+            <ellipse cx="310" cy="18" rx="22" ry="9" fill="white" opacity="0.7"/>
+            <!-- Mountains background -->
+            <path d="M0 120 L60 55 L120 100 L180 50 L240 90 L300 45 L362 80 L362 178 L0 178Z" fill="#6BA575" opacity="0.6"/>
+            <!-- Mountains foreground -->
+            <path d="M0 140 L80 75 L160 120 L220 65 L290 100 L362 70 L362 178 L0 178Z" fill="url(#mtnG)"/>
+            <!-- Water/lake -->
+            <ellipse cx="181" cy="160" rx="160" ry="28" fill="url(#waterG)" opacity="0.85"/>
+            <path d="M30 155 Q90 148 150 158 Q220 168 290 155 Q330 150 362 158" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+            <!-- Trees -->
+            <rect x="18" y="128" width="5" height="20" fill="#2D5A30"/>
+            <polygon points="20,108 12,130 28,130" fill="#3A7A3E"/>
+            <rect x="38" y="132" width="4" height="16" fill="#2D5A30"/>
+            <polygon points="40,115 33,135 47,135" fill="#3A7A3E"/>
+            <rect x="320" y="125" width="5" height="22" fill="#2D5A30"/>
+            <polygon points="322,105 314,127 330,127" fill="#3A7A3E"/>
+            <rect x="340" y="130" width="4" height="18" fill="#2D5A30"/>
+            <polygon points="342,112 335,132 349,132" fill="#3A7A3E"/>
+            <!-- Sun reflection -->
+            <ellipse cx="240" cy="155" rx="30" ry="6" fill="rgba(255,220,100,0.25)"/>
+            <!-- Overlay gradient -->
+            <rect width="362" height="178" fill="url(#overlayG)" opacity="0"/>
+            <defs><linearGradient id="overlayG" x1="0" y1="0" x2="0" y2="1"><stop offset="60%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(0,0,0,0.3)"/></linearGradient></defs>
+            <!-- Location badge -->
+            <rect x="12" y="148" width="120" height="22" rx="11" fill="rgba(0,0,0,0.45)"/>
+            <circle cx="24" cy="159" r="5" fill="#E8834A"/>
+            <text x="33" y="163" font-family="Nunito,sans-serif" font-size="10" fill="white" font-weight="700">Encantado, RS</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- White content -->
+      <div style="background:white;padding:16px 16px 0;">
+
+        <!-- Search bar -->
+        <div style="background:#F5F5F5;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="10" r="7" stroke="#9BA8A0" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="#9BA8A0" stroke-width="2" stroke-linecap="round"/></svg>
+          <span style="font-size:16px;color:#9BA8A0;font-weight:600;">Buscar por...</span>
+        </div>
+
+        <!-- Filter chips -->
+        <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:14px;margin:0 -16px;padding-left:16px;padding-right:16px;">
+          <div style="background:#2A7A50;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;"><span style="font-size:13px;font-weight:700;color:white;">Todos</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;"><span style="font-size:13px;font-weight:600;color:#5A7A70;">Restaurantes</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;"><span style="font-size:13px;font-weight:600;color:#5A7A70;">Atrações</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;"><span style="font-size:13px;font-weight:600;color:#5A7A70;">Natureza</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:7px 16px;white-space:nowrap;flex-shrink:0;"><span style="font-size:13px;font-weight:600;color:#5A7A70;">Eventos</span></div>
+        </div>
+
+        <!-- Section title -->
+        <div style="font-size:18px;font-weight:900;color:#1A2421;margin-bottom:14px;">Todos os locais</div>
+
+        <!-- Featured card -->
+        <div onClick="{{ goMapa }}" style="background:white;border-radius:18px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.10);margin-bottom:14px;cursor:pointer;">
+          <div style="position:relative;height:160px;overflow:hidden;">
+            <svg viewBox="0 0 362 160" width="100%" height="160" style="display:block;">
+              <rect width="362" height="160" fill="#87CEEB"/>
+              <path d="M0 100 L70 50 L140 90 L200 40 L270 80 L362 50 L362 160 L0 160Z" fill="#4A8C5C"/>
+              <path d="M0 115 L80 65 L170 105 L240 60 L320 95 L362 65 L362 160 L0 160Z" fill="#2D6A40"/>
+              <ellipse cx="181" cy="148" rx="160" ry="22" fill="#5B9EC9" opacity="0.8"/>
+              <ellipse cx="80" cy="35" rx="28" ry="11" fill="white" opacity="0.75"/>
+              <ellipse cx="280" cy="28" rx="24" ry="9" fill="white" opacity="0.65"/>
+            </svg>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(0,0,0,0.45));"></div>
+            <div style="position:absolute;top:10px;right:10px;background:#E8834A;border-radius:10px;padding:4px 10px;"><span style="font-size:11px;font-weight:800;color:white;">Destaque</span></div>
+          </div>
+          <div style="padding:14px 16px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div style="font-size:17px;font-weight:900;color:#1A2421;">Cristo Protetor</div>
+                <div style="font-size:13px;color:#7A9A8E;margin-top:2px;">Monumento · 2,1 km</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;background:#FFF8F0;border-radius:8px;padding:5px 9px;">
+                <svg width="13" height="13" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <span style="font-size:13px;font-weight:800;color:#E8834A;">4.8</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <span style="background:#EEF7F2;color:#2A7A50;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;">Natureza</span>
+              <span style="background:#EEF7F2;color:#2A7A50;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;">+120 pts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- List items -->
+        <div style="display:flex;flex-direction:column;gap:1px;background:#F0F4F2;border-radius:16px;overflow:hidden;margin-bottom:16px;">
+
+          <div style="background:white;padding:14px 16px;display:flex;align-items:center;gap:14px;">
+            <div style="width:56px;height:56px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#C8E8D8;display:flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 56 56" width="56" height="56"><rect width="56" height="56" fill="#A8D8B8"/><ellipse cx="28" cy="38" rx="22" ry="8" fill="#5B9EC9" opacity="0.7"/><path d="M6 36 L20 18 L28 26 L36 14 L50 36Z" fill="#2D6A40"/><ellipse cx="14" cy="18" rx="9" ry="5" fill="white" opacity="0.6"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:16px;font-weight:800;color:#1A2421;">Jardim dos Sentidos</div>
+              <div style="font-size:13px;color:#7A9A8E;margin-top:2px;">Natureza · 330 m</div>
+              <div style="display:flex;align-items:center;gap:3px;margin-top:5px;">
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#D0D8D4"/></svg>
+                <span style="font-size:12px;color:#7A9A8E;margin-left:2px;font-weight:600;">4.5</span>
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+
+          <div style="background:white;padding:14px 16px;display:flex;align-items:center;gap:14px;">
+            <div style="width:56px;height:56px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#D8C8B8;display:flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 56 56" width="56" height="56"><rect width="56" height="56" fill="#C8A878"/><path d="M10 42 L28 12 L46 42Z" fill="rgba(255,255,255,0.3)"/><rect x="24" y="20" width="8" height="22" fill="rgba(255,255,255,0.35)"/><rect x="22" y="36" width="12" height="6" fill="rgba(255,255,255,0.2)"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:16px;font-weight:800;color:#1A2421;">Cristo Protetor</div>
+              <div style="font-size:13px;color:#7A9A8E;margin-top:2px;">Monumento · 2,1 km</div>
+              <div style="display:flex;align-items:center;gap:3px;margin-top:5px;">
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <span style="font-size:12px;color:#7A9A8E;margin-left:2px;font-weight:600;">4.8</span>
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+
+          <div style="background:white;padding:14px 16px;display:flex;align-items:center;gap:14px;">
+            <div style="width:56px;height:56px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#E8D0B8;display:flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 56 56" width="56" height="56"><rect width="56" height="56" fill="#C89060"/><rect x="8" y="20" width="40" height="26" rx="3" fill="rgba(255,255,255,0.2)"/><rect x="14" y="28" width="10" height="8" rx="1" fill="rgba(255,255,255,0.35)"/><rect x="32" y="28" width="10" height="8" rx="1" fill="rgba(255,255,255,0.35)"/><rect x="22" y="34" width="12" height="12" rx="1" fill="rgba(255,255,255,0.25)"/><rect x="14" y="14" width="28" height="8" rx="2" fill="rgba(255,255,255,0.15)"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:16px;font-weight:800;color:#1A2421;">Museu do Imigrante</div>
+              <div style="font-size:13px;color:#7A9A8E;margin-top:2px;">Cultura · 1,8 km</div>
+              <div style="display:flex;align-items:center;gap:3px;margin-top:5px;">
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#D0D8D4"/></svg>
+                <span style="font-size:12px;color:#7A9A8E;margin-left:2px;font-weight:600;">4.4</span>
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+
+          <div style="background:white;padding:14px 16px;display:flex;align-items:center;gap:14px;">
+            <div style="width:56px;height:56px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#B8D0E8;display:flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 56 56" width="56" height="56"><rect width="56" height="56" fill="#8090C0"/><ellipse cx="28" cy="40" rx="18" ry="10" fill="rgba(255,255,255,0.2)"/><rect x="20" y="18" width="16" height="24" rx="2" fill="rgba(255,255,255,0.25)"/><rect x="24" y="12" width="8" height="8" rx="1" fill="rgba(255,255,255,0.2)"/></svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:16px;font-weight:800;color:#1A2421;">Cantina Segaloni</div>
+              <div style="font-size:13px;color:#7A9A8E;margin-top:2px;">Gastronomia · 3,4 km</div>
+              <div style="display:flex;align-items:center;gap:3px;margin-top:5px;">
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <span style="font-size:12px;color:#7A9A8E;margin-left:2px;font-weight:600;">4.7</span>
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+
+        </div>
+
+        <div style="height:90px;"></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════ MAPA ══════ -->
+  <sc-if value="{{ isMapa }}">
+    <div style="position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;">
+
+      <!-- Header -->
+      <div style="padding:62px 16px 12px;border-bottom:1px solid #F0F4F2;flex-shrink:0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div style="font-size:21px;font-weight:900;color:#1A2421;">Mapa Turístico</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:36px;height:36px;background:#F0F4F2;border-radius:18px;display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="#2A7A50" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <!-- Toggle -->
+            <div style="background:#F0F4F2;border-radius:10px;padding:2px;display:flex;gap:0;">
+              <div onClick="{{ setMapView }}" style="padding:6px 14px;border-radius:8px;cursor:pointer;background:{{ mapBg }};box-shadow:{{ mapShadow }};">
+                <span style="font-size:12px;font-weight:800;color:{{ mapColor }};">Mapa</span>
+              </div>
+              <div onClick="{{ setListView }}" style="padding:6px 14px;border-radius:8px;cursor:pointer;background:{{ listBg }};box-shadow:{{ listShadow }};">
+                <span style="font-size:12px;font-weight:800;color:{{ listColor }};">Lista</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Filter chips -->
+        <div style="display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px;">
+          <div style="background:#2A7A50;border-radius:20px;padding:6px 14px;white-space:nowrap;flex-shrink:0;"><span style="font-size:12px;font-weight:700;color:white;">Todos</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:6px 14px;white-space:nowrap;flex-shrink:0;"><span style="font-size:12px;font-weight:600;color:#5A7A70;">Restaurantes</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:6px 14px;white-space:nowrap;flex-shrink:0;"><span style="font-size:12px;font-weight:600;color:#5A7A70;">Natureza</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:6px 14px;white-space:nowrap;flex-shrink:0;"><span style="font-size:12px;font-weight:600;color:#5A7A70;">Gastronomia</span></div>
+          <div style="background:#F0F4F2;border-radius:20px;padding:6px 14px;white-space:nowrap;flex-shrink:0;"><span style="font-size:12px;font-weight:600;color:#5A7A70;">Cultura</span></div>
+        </div>
+      </div>
+
+      <!-- Map view -->
+      <sc-if value="{{ isMapView }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 402 580" width="402" height="580" style="display:block;position:absolute;inset:0;">
+            <rect width="402" height="580" fill="#E8F0E4"/>
+            <!-- Roads -->
+            <rect x="0" y="210" width="402" height="10" fill="white" opacity="0.9"/>
+            <rect x="0" y="340" width="402" height="8" fill="white" opacity="0.8"/>
+            <rect x="155" y="0" width="9" height="580" fill="white" opacity="0.9"/>
+            <rect x="280" y="0" width="7" height="580" fill="white" opacity="0.8"/>
+            <rect x="60" y="0" width="6" height="340" fill="white" opacity="0.7"/>
+            <!-- Parks / green areas -->
+            <rect x="168" y="224" width="100" height="104" rx="12" fill="#C8DFC0" opacity="0.8"/>
+            <rect x="68" y="224" width="72" height="90" rx="10" fill="#C8DFC0" opacity="0.6"/>
+            <rect x="295" y="354" width="80" height="70" rx="10" fill="#C8DFC0" opacity="0.6"/>
+            <!-- Buildings -->
+            <rect x="20" y="60" width="35" height="28" rx="3" fill="#D8E4D8" opacity="0.8"/>
+            <rect x="62" y="40" width="45" height="36" rx="3" fill="#D8E4D8" opacity="0.7"/>
+            <rect x="165" y="55" width="55" height="40" rx="3" fill="#D8E4D8" opacity="0.8"/>
+            <rect x="290" y="45" width="65" height="50" rx="3" fill="#D8E4D8" opacity="0.8"/>
+            <rect x="20" y="260" width="30" height="24" rx="3" fill="#D8E4D8" opacity="0.7"/>
+            <rect x="290" y="260" width="40" height="32" rx="3" fill="#D8E4D8" opacity=" 0.7"/>
+            <rect x="60" y="370" width="50" height="38" rx="3" fill="#D8E4D8" opacity="0.7"/>
+            <rect x="175" y="360" width="88" height="60" rx="3" fill="#D8E4D8" opacity="0.7"/>
+            <!-- River/water -->
+            <path d="M0 480 Q80 468 160 482 Q240 495 320 475 Q365 462 402 476 L402 580 L0 580Z" fill="#9DCFE0" opacity="0.6"/>
+            <!-- Location bubbles -->
+            <!-- Jardim dos Sentidos (teal) -->
+            <rect x="72" y="148" width="130" height="32" rx="16" fill="#1A7A6A"/>
+            <circle cx="88" cy="164" r="10" fill="rgba(255,255,255,0.25)"/>
+            <text x="104" y="169" font-family="Nunito,sans-serif" font-size="11" fill="white" font-weight="800">Jardim dos Sentidos</text>
+            <polygon points="100,180 110,180 105,188" fill="#1A7A6A"/>
+            <!-- Cristo Protetor (orange) -->
+            <rect x="244" y="84" width="118" height="32" rx="16" fill="#E8834A"/>
+            <circle cx="260" cy="100" r="10" fill="rgba(255,255,255,0.25)"/>
+            <text x="276" y="105" font-family="Nunito,sans-serif" font-size="11" fill="white" font-weight="800">Cristo Protetor</text>
+            <polygon points="280,116 290,116 285,124" fill="#E8834A"/>
+            <!-- Museu (purple) -->
+            <rect x="170" y="284" width="120" height="32" rx="16" fill="#7C5CBF"/>
+            <circle cx="186" cy="300" r="10" fill="rgba(255,255,255,0.25)"/>
+            <text x="202" y="305" font-family="Nunito,sans-serif" font-size="11" fill="white" font-weight="800">Museu Municipal</text>
+            <polygon points="212,316 222,316 217,324" fill="#7C5CBF"/>
+            <!-- Cantina (amber) -->
+            <rect x="295" y="180" width="102" height="32" rx="16" fill="#C8820A"/>
+            <circle cx="311" cy="196" r="10" fill="rgba(255,255,255,0.25)"/>
+            <text x="327" y="201" font-family="Nunito,sans-serif" font-size="11" fill="white" font-weight="800">Cantina Segaloni</text>
+            <polygon points="335,212 345,212 340,220" fill="#C8820A"/>
+            <!-- Parque (green light) -->
+            <rect x="20" y="370" width="110" height="32" rx="16" fill="#3A9A5C"/>
+            <circle cx="36" cy="386" r="10" fill="rgba(255,255,255,0.25)"/>
+            <text x="52" y="391" font-family="Nunito,sans-serif" font-size="11" fill="white" font-weight="800">Parque das Meninas</text>
+            <polygon points="68,402 78,402 73,410" fill="#3A9A5C"/>
+            <!-- Vinícola (blue) -->
+            <rect x="164" y="440" width="100" height="32" rx="16" fill="#2A6EA0"/>
+            <circle cx="180" cy="456" r="10" fill="rgba(255,255,255,0.25)"/>
+            <text x="196" y="461" font-family="Nunito,sans-serif" font-size="11" fill="white" font-weight="800">Vinícola Sega Luos</text>
+            <polygon points="214,472 224,472 219,480" fill="#2A6EA0"/>
+            <!-- Compass -->
+            <circle cx="370" cy="30" r="18" fill="white" opacity="0.9"/>
+            <text x="370" y="26" text-anchor="middle" font-size="10" fill="#2A7A50" font-weight="900" font-family="Nunito">N</text>
+            <polygon points="370,27 372,38 370,35 368,38" fill="#2A7A50"/>
+          </svg>
+        </div>
+      </sc-if>
+
+      <!-- List view -->
+      <sc-if value="{{ isListView }}">
+        <div style="flex:1;overflow-y:auto;padding:14px 16px 90px;">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+
+            <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;align-items:center;gap:0;">
+              <div style="width:90px;height:80px;flex-shrink:0;background:#B8CEB8;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                <svg viewBox="0 0 90 80" width="90" height="80"><rect width="90" height="80" fill="#8AAA90"/><path d="M0 55 L30 25 L55 45 L70 20 L90 40 L90 80 L0 80Z" fill="#2D6A40"/><ellipse cx="45" cy="68" rx="40" ry="15" fill="#5B9EC9" opacity="0.6"/></svg>
+              </div>
+              <div style="flex:1;padding:12px 14px;">
+                <div style="font-size:15px;font-weight:800;color:#1A2421;line-height:1.2;">Cristo Redentor –<br>Morro do Cristo</div>
+                <div style="display:flex;align-items:center;gap:3px;margin-top:5px;">
+                  <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                  <span style="font-size:12px;color:#7A9A8E;font-weight:600;margin-left:2px;">4.8</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;align-items:center;">
+              <div style="width:90px;height:80px;flex-shrink:0;background:#A8D8A8;display:flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 90 80" width="90" height="80"><rect width="90" height="80" fill="#88B888"/><rect x="10" y="50" width="70" height="10" fill="#2D6A40" opacity="0.5"/><circle cx="25" cy="35" r="15" fill="#4A8C5C" opacity="0.7"/><circle cx="55" cy="40" r="12" fill="#4A8C5C" opacity="0.6"/><circle cx="72" cy="32" r="10" fill="#4A8C5C" opacity="0.5"/></svg>
+              </div>
+              <div style="flex:1;padding:12px 14px;">
+                <div style="font-size:15px;font-weight:800;color:#1A2421;">Parque das Meninas</div>
+                <div style="display:flex;align-items:center;gap:3px;margin-top:5px;">
+                  <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#D0D8D4"/></svg>
+                  <span style="font-size:12px;color:#7A9A8E;font-weight:600;margin-left:2px;">4.5</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;align-items:center;">
+              <div style="width:90px;height:80px;flex-shrink:0;background:#D8C0A8;display:flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 90 80" width="90" height="80"><rect width="90" height="80" fill="#C8A070"/><rect x="15" y="25" width="60" height="40" rx="3" fill="rgba(255,255,255,0.2)"/><rect x="25" y="35" width="15" height="12" rx="1" fill="rgba(255,255,255,0.35)"/><rect x="50" y="35" width="15" height="12" rx="1" fill="rgba(255,255,255,0.35)"/><rect x="35" y="45" width="20" height="20" rx="1" fill="rgba(255,255,255,0.25)"/></svg>
+              </div>
+              <div style="flex:1;padding:12px 14px;">
+                <div style="font-size:15px;font-weight:800;color:#1A2421;">Cantina Segaloni</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;">
+                  <div style="display:flex;align-items:center;gap:3px;">
+                    <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                    <span style="font-size:12px;color:#7A9A8E;font-weight:600;margin-left:2px;">4.7</span>
+                  </div>
+                  <span style="background:#E8834A;color:white;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;">Check-in</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;align-items:center;">
+              <div style="width:90px;height:80px;flex-shrink:0;background:#C8D8E8;display:flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 90 80" width="90" height="80"><rect width="90" height="80" fill="#A0B8D0"/><rect x="10" y="20" width="70" height="45" rx="2" fill="rgba(255,255,255,0.18)"/><rect x="18" y="28" width="20" height="16" rx="1" fill="rgba(255,255,255,0.3)"/><rect x="50" y="28" width="20" height="16" rx="1" fill="rgba(255,255,255,0.3)"/><rect x="30" y="42" width="30" height="23" rx="1" fill="rgba(255,255,255,0.2)"/></svg>
+              </div>
+              <div style="flex:1;padding:12px 14px;">
+                <div style="font-size:15px;font-weight:800;color:#1A2421;">Museu Municipal</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;">
+                  <div style="display:flex;align-items:center;gap:3px;">
+                    <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#D0D8D4"/></svg>
+                    <span style="font-size:12px;color:#7A9A8E;font-weight:600;margin-left:2px;">4.4</span>
+                  </div>
+                  <span style="background:#E8834A;color:white;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;">Check-in</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;align-items:center;">
+              <div style="width:90px;height:80px;flex-shrink:0;background:#E8D8C8;display:flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 90 80" width="90" height="80"><rect width="90" height="80" fill="#C09870"/><rect x="15" y="25" width="25" height="35" rx="2" fill="rgba(255,255,255,0.25)"/><rect x="50" y="30" width="20" height="30" rx="2" fill="rgba(255,255,255,0.2)"/><ellipse cx="27" cy="22" rx="10" ry="6" fill="rgba(255,255,255,0.15)"/></svg>
+              </div>
+              <div style="flex:1;padding:12px 14px;">
+                <div style="font-size:15px;font-weight:800;color:#1A2421;">Vinícola Sega Luos</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;">
+                  <div style="display:flex;align-items:center;gap:3px;">
+                    <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                    <span style="font-size:12px;color:#7A9A8E;font-weight:600;margin-left:2px;">4.6</span>
+                  </div>
+                  <span style="background:#E8834A;color:white;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;">Check-in</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;align-items:center;">
+              <div style="width:90px;height:80px;flex-shrink:0;background:#D0C8E0;display:flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 90 80" width="90" height="80"><rect width="90" height="80" fill="#A898C8"/><path d="M30 65 L45 15 L60 65Z" fill="rgba(255,255,255,0.25)"/><rect x="41" y="24" width="8" height="41" fill="rgba(255,255,255,0.2)"/><rect x="36" y="58" width="18" height="7" rx="1" fill="rgba(255,255,255,0.15)"/></svg>
+              </div>
+              <div style="flex:1;padding:12px 14px;">
+                <div style="font-size:15px;font-weight:800;color:#1A2421;">Igreja Matriz São Luís</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;">
+                  <div style="display:flex;align-items:center;gap:3px;">
+                    <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#D0D8D4"/></svg>
+                    <span style="font-size:12px;color:#7A9A8E;font-weight:600;margin-left:2px;">4.5</span>
+                  </div>
+                  <span style="background:#E8834A;color:white;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;">Check-in</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <!-- ══════ QR CODE ══════ -->
+  <sc-if value="{{ isQr }}">
+    <div style="position:absolute;inset:0;background:white;overflow-y:auto;">
+      <div style="padding:62px 20px 20px;">
+        <div style="font-size:24px;font-weight:900;color:#1A2421;margin-bottom:4px;">Ler QR Code</div>
+        <div style="font-size:14px;color:#7A9A8E;margin-bottom:22px;">Aponte para o QR Code do local</div>
+
+        <!-- Camera viewfinder -->
+        <div style="border-radius:20px;overflow:hidden;position:relative;background:#1A2C24;height:260px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;">
+          <!-- Grid overlay -->
+          <svg viewBox="0 0 362 260" width="362" height="260" style="position:absolute;inset:0;display:block;">
+            <!-- Camera bg -->
+            <rect width="362" height="260" fill="#1E3028"/>
+            <!-- Subtle grid -->
+            <line x1="120" y1="0" x2="120" y2="260" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="241" y1="0" x2="241" y2="260" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="0" y1="87" x2="362" y2="87" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="0" y1="174" x2="362" y2="174" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <!-- Dark vignette edges -->
+            <rect x="0" y="0" width="70" height="260" fill="rgba(0,0,0,0.3)"/>
+            <rect x="292" y="0" width="70" height="260" fill="rgba(0,0,0,0.3)"/>
+            <rect x="0" y="0" width="362" height="40" fill="rgba(0,0,0,0.3)"/>
+            <rect x="0" y="220" width="362" height="40" fill="rgba(0,0,0,0.3)"/>
+          </svg>
+          <!-- Corners -->
+          <div style="position:absolute;top:30px;left:70px;width:40px;height:40px;border-top:3.5px solid #2A7A50;border-left:3.5px solid #2A7A50;border-radius:6px 0 0 0;"></div>
+          <div style="position:absolute;top:30px;right:70px;width:40px;height:40px;border-top:3.5px solid #2A7A50;border-right:3.5px solid #2A7A50;border-radius:0 6px 0 0;"></div>
+          <div style="position:absolute;bottom:30px;left:70px;width:40px;height:40px;border-bottom:3.5px solid #2A7A50;border-left:3.5px solid #2A7A50;border-radius:0 0 0 6px;"></div>
+          <div style="position:absolute;bottom:30px;right:70px;width:40px;height:40px;border-bottom:3.5px solid #2A7A50;border-right:3.5px solid #2A7A50;border-radius:0 0 6px 0;"></div>
+          <!-- Fairy watermark -->
+          <div style="opacity:0.18;">
+            <svg viewBox="0 0 60 70" width="60" height="70">
+              <ellipse cx="16" cy="40" rx="16" ry="9" fill="#C8F2E8" transform="rotate(-28,16,40)"/>
+              <ellipse cx="44" cy="40" rx="16" ry="9" fill="#C8F2E8" transform="rotate(28,44,40)"/>
+              <ellipse cx="30" cy="52" rx="8" ry="10" fill="#E8F7F4"/>
+              <circle cx="30" cy="28" r="11" fill="#F5C8A0"/>
+              <ellipse cx="30" cy="21" rx="11" ry="6" fill="#7A3C1A"/>
+              <circle cx="25" cy="27" r="2.5" fill="#1A2421"/>
+              <circle cx="35" cy="27" r="2.5" fill="#1A2421"/>
+              <path d="M25 32 Q30 37 35 32" stroke="#9B4F20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <!-- Scan beam -->
+          <sc-if value="{{ scanning }}">
+            <div style="position:absolute;top:30px;left:70px;right:70px;height:2px;background:linear-gradient(90deg,transparent,#2A7A50,rgba(168,220,168,0.9),#2A7A50,transparent);border-radius:1px;animation:scanBeam 1.4s ease-in-out infinite;box-shadow:0 0 10px rgba(42,122,80,0.8);"></div>
+          </sc-if>
+        </div>
+
+        <!-- Scan button -->
+        <div onClick="{{ startScan }}" style="background:#2A7A50;border-radius:16px;padding:16px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;margin-bottom:28px;box-shadow:0 4px 14px rgba(42,122,80,0.35);">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="12" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="2" y="12" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="4" y="4" width="4" height="4" fill="white"/><rect x="14" y="4" width="4" height="4" fill="white"/><rect x="4" y="14" width="4" height="4" fill="white"/><rect x="13" y="13" width="2" height="2" fill="white"/><rect x="17" y="13" width="2" height="2" fill="white"/><rect x="13" y="17" width="2" height="2" fill="white"/><rect x="17" y="17" width="2" height="2" fill="white"/><rect x="15" y="15" width="2" height="2" fill="white"/></svg>
+          <span style="font-size:16px;font-weight:800;color:white;">Simular: Jardim dos Sentidos</span>
+        </div>
+
+        <!-- Recently visited -->
+        <div style="font-size:17px;font-weight:900;color:#1A2421;margin-bottom:12px;">Últimos locais visitados</div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:#F8FAF9;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:#D8C8E8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;">🏛️</div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:800;color:#1A2421;">Museu Municipal</div>
+              <div style="font-size:12px;color:#7A9A8E;margin-top:1px;">Ontem · 10h30</div>
+            </div>
+            <span style="background:#E8F5EE;color:#2A7A50;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:800;">check-in</span>
+          </div>
+          <div style="background:#F8FAF9;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:#E0D0B8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;">🍷</div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:800;color:#1A2421;">Vinícola Sega Luos</div>
+              <div style="font-size:12px;color:#7A9A8E;margin-top:1px;">Anteontem · 15h00</div>
+            </div>
+            <span style="background:#E8F5EE;color:#2A7A50;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:800;">check-in</span>
+          </div>
+        </div>
+      </div>
+      <div style="height:80px;"></div>
+    </div>
+  </sc-if>
+
+  <!-- ══════ CENTRAL DE DÚVIDAS ══════ -->
+  <sc-if value="{{ isDuvidas }}">
+    <div style="position:absolute;inset:0;background:#F8FAF9;display:flex;flex-direction:column;">
+      <!-- Header -->
+      <div style="background:white;padding:62px 18px 14px;border-bottom:1px solid #EEF4F0;flex-shrink:0;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;background:linear-gradient(135deg,#2A7A50,#1A5A38);border-radius:20px;display:flex;align-items:center;justify-content:center;animation:floatFairy 3s ease-in-out infinite;">
+            <svg viewBox="0 0 24 28" width="22" height="26">
+              <ellipse cx="6" cy="16" rx="6" ry="3.5" fill="#C8F2E8" opacity="0.8" transform="rotate(-28,6,16)"/>
+              <ellipse cx="18" cy="16" rx="6" ry="3.5" fill="#C8F2E8" opacity="0.8" transform="rotate(28,18,16)"/>
+              <circle cx="12" cy="11" r="6" fill="#F5C8A0"/>
+              <ellipse cx="12" cy="8" rx="6" ry="3" fill="#7A3C1A"/>
+              <circle cx="9.5" cy="11" r="1.5" fill="#1A2421"/>
+              <circle cx="14.5" cy="11" r="1.5" fill="#1A2421"/>
+              <path d="M9.5 14 Q12 16.5 14.5 14" stroke="#9B4F20" stroke-width="1" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-size:18px;font-weight:900;color:#1A2421;">Central de Dúvidas</div>
+            <div style="font-size:12px;color:#7A9A8E;margin-top:1px;">Fada Encantado está aqui para ajudar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat area -->
+      <div style="flex:1;overflow-y:auto;padding:16px;">
+
+        <!-- Quick question chips -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:13px;color:#7A9A8E;font-weight:700;margin-bottom:10px;">Perguntas frequentes</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div onClick="{{ askQ1 }}" style="background:white;border:1.5px solid #E0EDE6;border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:14px;font-weight:600;color:#1A2421;">Onde fica o Cristo Redentor de Encantado?</span>
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div onClick="{{ askQ2 }}" style="background:white;border:1.5px solid #E0EDE6;border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:14px;font-weight:600;color:#1A2421;">Como funciona o Passaporte Encantado?</span>
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div onClick="{{ askQ3 }}" style="background:white;border:1.5px solid #E0EDE6;border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:14px;font-weight:600;color:#1A2421;">O que é o Jardim dos Sentidos?</span>
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div onClick="{{ askQ4 }}" style="background:white;border:1.5px solid #E0EDE6;border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:14px;font-weight:600;color:#1A2421;">Quais os horários das atrações?</span>
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 3l6 6-6 6" stroke="#C8D8D0" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat bubble -->
+        <sc-if value="{{ hasChatMsg }}">
+          <div style="animation:slideUp 0.35s ease both;">
+            <!-- User bubble -->
+            <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+              <div style="background:#2A7A50;border-radius:16px 16px 4px 16px;padding:12px 16px;max-width:75%;">
+                <div style="font-size:14px;color:white;font-weight:600;line-height:1.45;">{{ chatQ }}</div>
+              </div>
+            </div>
+            <!-- Fairy response -->
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+              <div style="width:34px;height:34px;background:linear-gradient(135deg,#2A7A50,#1A5A38);border-radius:17px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:4px;">
+                <svg viewBox="0 0 18 22" width="16" height="20"><ellipse cx="4" cy="12" rx="4" ry="2.5" fill="#C8F2E8" opacity="0.8" transform="rotate(-28,4,12)"/><ellipse cx="14" cy="12" rx="4" ry="2.5" fill="#C8F2E8" opacity="0.8" transform="rotate(28,14,12)"/><circle cx="9" cy="8" r="5" fill="#F5C8A0"/><ellipse cx="9" cy="5.5" rx="5" ry="2.5" fill="#7A3C1A"/><circle cx="7" cy="8" r="1.2" fill="#1A2421"/><circle cx="11" cy="8" r="1.2" fill="#1A2421"/></svg>
+              </div>
+              <div style="background:white;border-radius:4px 16px 16px 16px;padding:12px 14px;max-width:78%;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+                <div style="font-size:14px;color:#1A2421;line-height:1.5;font-weight:600;">{{ chatA }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- Falar button -->
+        <div style="margin-top:8px;">
+          <div style="background:linear-gradient(135deg,#2A7A50,#E8834A);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.2);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:16px;">🧚</div>
+            <span style="font-size:15px;font-weight:800;color:white;">Falar com a Fada Encantado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input bar -->
+      <div style="background:white;border-top:1px solid #EEF4F0;padding:12px 16px 30px;flex-shrink:0;display:flex;gap:10px;align-items:center;">
+        <div style="flex:1;background:#F0F4F2;border-radius:22px;padding:10px 16px;">
+          <span style="font-size:14px;color:#9BA8A0;">Como posso te ajudar hoje?</span>
+        </div>
+        <div style="width:40px;height:40px;background:#2A7A50;border-radius:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════ PERFIL ══════ -->
+  <sc-if value="{{ isPerfil }}">
+    <div style="position:absolute;inset:0;overflow-y:auto;background:#F8FAF9;">
+      <!-- Header -->
+      <div style="background:white;padding:62px 18px 20px;border-bottom:1px solid #EEF4F0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+          <div style="font-size:22px;font-weight:900;color:#1A2421;">Seu Perfil</div>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#2A7A50" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#2A7A50" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <!-- Avatar + name -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+          <div style="width:68px;height:68px;border-radius:34px;background:linear-gradient(135deg,#E8834A,#C86020);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:white;border:3px solid #EEF4F0;">AS</div>
+          <div>
+            <div style="font-size:14px;color:#7A9A8E;font-weight:600;">Olá,</div>
+            <div style="font-size:22px;font-weight:900;color:#1A2421;">Ana Silva!</div>
+            <div style="font-size:13px;color:#7A9A8E;margin-top:1px;">📍 Encantado, RS</div>
+          </div>
+        </div>
+        <!-- Passport progress -->
+        <div style="background:#F0F6F2;border-radius:14px;padding:14px 16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <div style="font-size:14px;font-weight:800;color:#1A2421;">Passaporte Encantado</div>
+            <div style="font-size:13px;font-weight:800;color:#2A7A50;">2 / 6 locais</div>
+          </div>
+          <div style="height:7px;background:#D8EAE0;border-radius:4px;overflow:hidden;">
+            <div style="width:33%;height:100%;background:linear-gradient(90deg,#2A7A50,#E8834A);border-radius:4px;"></div>
+          </div>
+          <div style="font-size:12px;color:#7A9A8E;margin-top:6px;">Complete 6 locais para ganhar recompensas especiais</div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div style="display:flex;background:white;margin-top:10px;border-top:1px solid #EEF4F0;border-bottom:1px solid #EEF4F0;">
+        <div onClick="{{ goPontos }}" style="flex:1;padding:18px 0;text-align:center;cursor:pointer;border-right:1px solid #EEF4F0;">
+          <div style="font-size:24px;font-weight:900;color:#1A2421;">2</div>
+          <div style="font-size:12px;color:#7A9A8E;font-weight:700;margin-top:2px;">Locais</div>
+        </div>
+        <div onClick="{{ goConquistas }}" style="flex:1;padding:18px 0;text-align:center;cursor:pointer;border-right:1px solid #EEF4F0;">
+          <div style="font-size:24px;font-weight:900;color:#1A2421;">3</div>
+          <div style="font-size:12px;color:#7A9A8E;font-weight:700;margin-top:2px;">Conquistas</div>
+        </div>
+        <div style="flex:1;padding:18px 0;text-align:center;cursor:pointer;">
+          <div style="font-size:24px;font-weight:900;color:#1A2421;">320</div>
+          <div style="font-size:12px;color:#7A9A8E;font-weight:700;margin-top:2px;">Pontos</div>
+        </div>
+      </div>
+
+      <!-- Visited places -->
+      <div style="padding:18px 16px 8px;">
+        <div style="font-size:17px;font-weight:900;color:#1A2421;margin-bottom:12px;">Locais visitados</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:white;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+            <div style="width:46px;height:46px;border-radius:12px;background:#E8C8A0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;">⛪</div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:800;color:#1A2421;">Cristo Protetor</div>
+              <div style="display:flex;align-items:center;gap:3px;margin-top:4px;">
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg>
+                <span style="font-size:12px;color:#7A9A8E;margin-left:2px;font-weight:600;">4.8</span>
+              </div>
+            </div>
+            <div style="background:#E8F5EE;border-radius:8px;padding:4px 10px;"><span style="font-size:12px;font-weight:800;color:#2A7A50;">+120 pts</span></div>
+          </div>
+          <div style="background:white;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+            <div style="width:46px;height:46px;border-radius:12px;background:#C8E8D0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;">🌸</div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:800;color:#1A2421;">Jardim dos Sentidos</div>
+              <div style="display:flex;align-items:center;gap:3px;margin-top:4px;">
+                <svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#E8834A"/></svg><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.4-2.25 2.2.53 3.1L6 8l-2.78 1.5.53-3.1L1.5 4.2l3.1-.4L6 1z" fill="#D0D8D4"/></svg>
+                <span style="font-size:12px;color:#7A9A8E;margin-left:2px;font-weight:600;">4.5</span>
+              </div>
+            </div>
+            <div style="background:#E8F5EE;border-radius:8px;padding:4px 10px;"><span style="font-size:12px;font-weight:800;color:#2A7A50;">+150 pts</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accessibility -->
+      <div style="padding:18px 16px 28px;">
+        <div style="font-size:17px;font-weight:900;color:#1A2421;margin-bottom:12px;">Acessibilidade</div>
+        <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+          <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #F0F4F2;">
+            <div style="font-size:15px;font-weight:700;color:#1A2421;">Texto grande</div>
+            <div style="width:46px;height:26px;background:#2A7A50;border-radius:13px;position:relative;"><div style="position:absolute;top:2px;right:2px;width:22px;height:22px;background:white;border-radius:11px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div>
+          </div>
+          <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #F0F4F2;">
+            <div style="font-size:15px;font-weight:700;color:#1A2421;">Rota acessível</div>
+            <div style="width:46px;height:26px;background:#2A7A50;border-radius:13px;position:relative;"><div style="position:absolute;top:2px;right:2px;width:22px;height:22px;background:white;border-radius:11px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div>
+          </div>
+          <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:15px;font-weight:700;color:#1A2421;">Alto contraste</div>
+            <div style="width:46px;height:26px;background:#D8E4E0;border-radius:13px;position:relative;"><div style="position:absolute;top:2px;left:2px;width:22px;height:22px;background:white;border-radius:11px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════ CONQUISTAS ══════ -->
+  <sc-if value="{{ isConquistas }}">
+    <div style="position:absolute;inset:0;overflow-y:auto;background:#F8FAF9;">
+      <div style="padding:62px 18px 20px;background:white;border-bottom:1px solid #EEF4F0;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div onClick="{{ goPerfil }}" style="width:36px;height:36px;background:#F0F4F2;border-radius:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M12 3l-6 6 6 6" stroke="#1A2421" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size:22px;font-weight:900;color:#1A2421;">Conquistas</div>
+            <div style="font-size:13px;color:#7A9A8E;">3 de 9 desbloqueadas</div>
+          </div>
+        </div>
+        <div style="height:6px;background:#EEF4F0;border-radius:3px;overflow:hidden;">
+          <div style="width:33%;height:100%;background:linear-gradient(90deg,#2A7A50,#E8834A);border-radius:3px;"></div>
+        </div>
+      </div>
+      <!-- Badge grid -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:20px 16px 90px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <div style="position:relative;width:74px;height:74px;"><div style="width:74px;height:74px;border-radius:37px;background:linear-gradient(135deg,#E8F5EE,#C0E8D0);border:2.5px solid #2A7A50;display:flex;align-items:center;justify-content:center;font-size:30px;">🌟</div><div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;background:#2A7A50;border-radius:11px;border:2px solid white;display:flex;align-items:center;justify-content:center;"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div style="font-size:11px;font-weight:800;color:#1A2421;text-align:center;line-height:1.3;">Chegada<br>Mágica</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <div style="position:relative;width:74px;height:74px;"><div style="width:74px;height:74px;border-radius:37px;background:linear-gradient(135deg,#EEF0F8,#D8D0EE);border:2.5px solid #7C5CBF;display:flex;align-items:center;justify-content:center;font-size:30px;">🌸</div><div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;background:#2A7A50;border-radius:11px;border:2px solid white;display:flex;align-items:center;justify-content:center;"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div style="font-size:11px;font-weight:800;color:#1A2421;text-align:center;line-height:1.3;">Jardim dos<br>Sentidos</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <div style="position:relative;width:74px;height:74px;"><div style="width:74px;height:74px;border-radius:37px;background:linear-gradient(135deg,#FEF0E6,#FDDBC0);border:2.5px solid #E8834A;display:flex;align-items:center;justify-content:center;font-size:30px;">⛪</div><div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;background:#2A7A50;border-radius:11px;border:2px solid white;display:flex;align-items:center;justify-content:center;"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div style="font-size:11px;font-weight:800;color:#1A2421;text-align:center;line-height:1.3;">Cristo<br>Protetor</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="width:74px;height:74px;border-radius:37px;background:#EAEFED;border:2px solid #D8E0DC;display:flex;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:0.4;">🏛️</div><div style="font-size:11px;font-weight:700;color:#9BA8A0;text-align:center;line-height:1.3;">Historiador</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="width:74px;height:74px;border-radius:37px;background:#EAEFED;border:2px solid #D8E0DC;display:flex;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:0.4;">🍷</div><div style="font-size:11px;font-weight:700;color:#9BA8A0;text-align:center;line-height:1.3;">Mesa Gaúcha</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="width:74px;height:74px;border-radius:37px;background:#EAEFED;border:2px solid #D8E0DC;display:flex;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:0.4;">🎖️</div><div style="font-size:11px;font-weight:700;color:#9BA8A0;text-align:center;line-height:1.3;">Passaporte<br>Completo</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="width:74px;height:74px;border-radius:37px;background:#EAEFED;border:2px solid #D8E0DC;display:flex;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:0.4;">📷</div><div style="font-size:11px;font-weight:700;color:#9BA8A0;text-align:center;line-height:1.3;">Fotógrafo</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="width:74px;height:74px;border-radius:37px;background:#EAEFED;border:2px solid #D8E0DC;display:flex;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:0.4;">☕</div><div style="font-size:11px;font-weight:700;color:#9BA8A0;text-align:center;line-height:1.3;">Gaúcho<br>de Coração</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="width:74px;height:74px;border-radius:37px;background:#EAEFED;border:2px solid #D8E0DC;display:flex;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:0.4;">🌅</div><div style="font-size:11px;font-weight:700;color:#9BA8A0;text-align:center;line-height:1.3;">Madrugador</div></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════ PONTOS ══════ -->
+  <sc-if value="{{ isPontos }}">
+    <div style="position:absolute;inset:0;overflow-y:auto;background:#F8FAF9;">
+      <div style="background:linear-gradient(155deg,#2A7A50,#1A5038);padding:62px 20px 24px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:rgba(255,255,255,0.05);border-radius:90px;"></div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">PASSAPORTE ENCANTADO</div>
+        <div style="display:flex;align-items:flex-end;gap:8px;"><div style="font-size:62px;font-weight:900;color:white;line-height:1;">320</div><div style="font-size:20px;font-weight:700;color:rgba(255,255,255,0.65);padding-bottom:9px;">pontos</div></div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:2px;">Ana Silva · 2 locais visitados</div>
+        <div style="margin-top:18px;background:rgba(0,0,0,0.15);border-radius:14px;padding:12px 14px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:white;">🎫 Ingresso Grátis – Museu</span><span style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:700;">2/5</span></div>
+          <div style="height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;"><div style="width:40%;height:100%;background:#E8834A;border-radius:3px;"></div></div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:5px;">Visite 3 locais para desbloquear</div>
+        </div>
+      </div>
+      <div style="padding:18px 16px 90px;">
+        <div style="font-size:17px;font-weight:900;color:#1A2421;margin-bottom:12px;">Histórico</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:white;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 8px rgba(0,0,0,0.06);"><div style="width:44px;height:44px;background:#E0F5EC;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:20px;">🌸</div><div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#1A2421;">Jardim dos Sentidos</div><div style="font-size:12px;color:#7A9A8E;margin-top:1px;">Hoje · 14h22</div></div><span style="font-size:17px;font-weight:900;color:#2A7A50;">+150</span></div>
+          <div style="background:white;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 8px rgba(0,0,0,0.06);"><div style="width:44px;height:44px;background:#FEF0E6;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:20px;">⛪</div><div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#1A2421;">Cristo Protetor</div><div style="font-size:12px;color:#7A9A8E;margin-top:1px;">Ontem · 10h30</div></div><span style="font-size:17px;font-weight:900;color:#2A7A50;">+120</span></div>
+          <div style="background:white;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 8px rgba(0,0,0,0.06);"><div style="width:44px;height:44px;background:#F0EBF8;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:20px;">🌟</div><div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#1A2421;">Bônus boas-vindas</div><div style="font-size:12px;color:#7A9A8E;margin-top:1px;">Primeiro check-in</div></div><span style="font-size:17px;font-weight:900;color:#2A7A50;">+50</span></div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══════ FAIRY FAB ══════ -->
+  <div style="position:absolute;bottom:92px;right:14px;z-index:55;animation:floatFairy 3.2s ease-in-out infinite;cursor:pointer;">
+    <div style="width:52px;height:52px;background:linear-gradient(145deg,#2A7A50,#1A5A38);border-radius:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(42,122,80,0.45),0 2px 5px rgba(0,0,0,0.15);">
+      <svg viewBox="0 0 36 42" width="28" height="33">
+        <ellipse cx="10" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(-28,10,24)"/>
+        <ellipse cx="26" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(28,26,24)"/>
+        <ellipse cx="18" cy="32" rx="5" ry="6.5" fill="#E8F7F4"/>
+        <circle cx="18" cy="17" r="7" fill="#F5C8A0"/>
+        <ellipse cx="18" cy="13" rx="7" ry="3.8" fill="#7A3C1A"/>
+        <path d="M11 15 Q18 8 25 15" fill="#7A3C1A"/>
+        <circle cx="15.5" cy="16" r="1.6" fill="#1A2421"/>
+        <circle cx="20.5" cy="16" r="1.6" fill="#1A2421"/>
+        <circle cx="16.2" cy="15.3" r="0.5" fill="white"/>
+        <circle cx="21.2" cy="15.3" r="0.5" fill="white"/>
+        <path d="M15 20 Q18 23 21 20" stroke="#9B4F20" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <line x1="24" y1="23" x2="31" y2="16" stroke="#E8834A" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="31" cy="16" r="3.5" fill="#E8834A"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════ TAB BAR ══════ -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:white;border-top:1px solid #EEF4F0;z-index:50;display:flex;align-items:flex-start;padding-top:8px;box-sizing:border-box;">
+    <div onClick="{{ goExplorar }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="{{ cExplorar }}" stroke-width="2" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="{{ cExplorar }}" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span style="font-size:10px;font-weight:{{ wExplorar }};color:{{ cExplorar }};">Explorar</span>
+    </div>
+    <div onClick="{{ goMapa }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 4L3 7.5V19l6-3 6 3 6-3V4.5l-6 3-6-3z" stroke="{{ cMapa }}" stroke-width="2" stroke-linejoin="round"/><line x1="9" y1="4" x2="9" y2="16" stroke="{{ cMapa }}" stroke-width="2"/><line x1="15" y1="7.5" x2="15" y2="19.5" stroke="{{ cMapa }}" stroke-width="2"/></svg>
+      <span style="font-size:10px;font-weight:{{ wMapa }};color:{{ cMapa }};">Mapa</span>
+    </div>
+    <div onClick="{{ goQr }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;margin-top:-16px;">
+      <div style="width:50px;height:50px;background:#2A7A50;border-radius:25px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(42,122,80,0.4);border:3px solid white;">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="12" y="2" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="2" y="12" width="8" height="8" rx="1.5" stroke="white" stroke-width="1.8"/><rect x="4" y="4" width="4" height="4" fill="white"/><rect x="14" y="4" width="4" height="4" fill="white"/><rect x="4" y="14" width="4" height="4" fill="white"/><rect x="13" y="13" width="2" height="2" fill="white"/><rect x="17" y="13" width="2" height="2" fill="white"/><rect x="13" y="17" width="2" height="2" fill="white"/><rect x="17" y="17" width="2" height="2" fill="white"/><rect x="15" y="15" width="2" height="2" fill="white"/></svg>
+      </div>
+      <span style="font-size:10px;font-weight:{{ wQr }};color:{{ cQr }};">QR Code</span>
+    </div>
+    <div onClick="{{ goDuvidas }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="{{ cDuvidas }}" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span style="font-size:10px;font-weight:{{ wDuvidas }};color:{{ cDuvidas }};">Dúvidas</span>
+    </div>
+    <div onClick="{{ goPerfil }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding-top:2px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="{{ cPerfil }}" stroke-width="2"/><path d="M4 20c0-3.5 3.6-6 8-6s8 2.5 8 6" stroke="{{ cPerfil }}" stroke-width="2" stroke-linecap="round"/></svg>
+      <span style="font-size:10px;font-weight:{{ wPerfil }};color:{{ cPerfil }};">Perfil</span>
+    </div>
+  </div>
+
+  <!-- ══════ QR SUCCESS OVERLAY ══════ -->
+  <sc-if value="{{ showQrSuccess }}">
+    <div style="position:absolute;inset:0;z-index:200;background:rgba(10,30,20,0.88);display:flex;align-items:flex-end;" onClick="{{ closeSuccess }}">
+      <div style="background:white;border-radius:28px 28px 0 0;padding:24px 22px 34px;width:100%;box-sizing:border-box;animation:slideUp 0.4s cubic-bezier(.34,1.56,.64,1) both;" onClick="{{ stopProp }}">
+        <div style="text-align:center;margin-bottom:14px;">
+          <div style="display:inline-flex;width:78px;height:78px;background:#E8F5EE;border-radius:39px;align-items:center;justify-content:center;animation:floatFairy 3s ease-in-out infinite;">
+            <svg viewBox="0 0 36 42" width="48" height="56"><ellipse cx="10" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(-28,10,24)"/><ellipse cx="26" cy="24" rx="9.5" ry="5.5" fill="#C8F2E8" opacity="0.85" transform="rotate(28,26,24)"/><ellipse cx="18" cy="32" rx="5" ry="6.5" fill="#E8F7F4"/><circle cx="18" cy="17" r="7" fill="#F5C8A0"/><ellipse cx="18" cy="13" rx="7" ry="3.8" fill="#7A3C1A"/><path d="M11 15 Q18 8 25 15" fill="#7A3C1A"/><circle cx="15.5" cy="16" r="1.6" fill="#1A2421"/><circle cx="20.5" cy="16" r="1.6" fill="#1A2421"/><path d="M15 20 Q18 23 21 20" stroke="#9B4F20" stroke-width="1" fill="none" stroke-linecap="round"/><line x1="24" y1="23" x2="31" y2="16" stroke="#E8834A" stroke-width="1.6" stroke-linecap="round"/><circle cx="31" cy="16" r="3.5" fill="#E8834A"/></svg>
+          </div>
+        </div>
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="font-size:13px;color:#7A9A8E;font-weight:700;">Que delícia! Você está no</div>
+          <div style="font-size:22px;font-weight:900;color:#1A2421;margin-top:2px;">Jardim dos Sentidos 🌸</div>
+          <div style="font-size:14px;color:#7A9A8E;margin-top:6px;line-height:1.5;">Explore aromas, texturas e cores únicas de Encantado.</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#2A7A50,#1A5038);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+          <div style="font-size:32px;">⭐</div>
+          <div style="flex:1;"><div style="font-size:12px;color:rgba(255,255,255,0.65);font-weight:600;">Você ganhou</div><div style="font-size:26px;font-weight:900;color:white;line-height:1;">+150 pontos!</div></div>
+          <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:8px 12px;text-align:center;"><div style="font-size:16px;font-weight:900;color:white;">320</div><div style="font-size:9px;color:rgba(255,255,255,0.55);font-weight:700;">total</div></div>
+        </div>
+        <div style="background:#FFF5EF;border:1.5px dashed #E8834A;border-radius:14px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+          <div style="font-size:26px;">🏷️</div>
+          <div><div style="font-size:18px;font-weight:900;color:#E8834A;">15% de desconto</div><div style="font-size:12px;color:#A06040;margin-top:1px;">Válido hoje na loja do jardim</div></div>
+        </div>
+        <div onClick="{{ closeSuccess }}" style="background:#2A7A50;border-radius:14px;padding:15px;text-align:center;cursor:pointer;box-shadow:0 4px 12px rgba(42,122,80,0.35);">
+          <span style="font-size:16px;font-weight:900;color:white;">Ver meu passaporte →</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 520, &quot;height&quot;: 980}}">
+class Component extends DCLogic {
+  state = {
+    tab: 'explorar',
+    mapView: 'map',
+    scanning: false,
+    showQrSuccess: false,
+    chatQ: '',
+    chatA: '',
+  };
+
+  renderVals() {
+    const { tab, mapView, scanning, showQrSuccess, chatQ, chatA } = this.state;
+    const a = t => tab === t;
+    const c = t => a(t) ? '#2A7A50' : '#9BA8A0';
+    const w = t => a(t) ? '800' : '600';
+
+    return {
+      isExplorar: a('explorar'),
+      isMapa: a('mapa'),
+      isQr: a('qr'),
+      isDuvidas: a('duvidas'),
+      isPerfil: a('perfil') || a('pontos'),
+      isConquistas: a('conquistas'),
+      isPontos: a('pontos'),
+
+      isMapView: mapView === 'map',
+      isListView: mapView === 'list',
+
+      mapBg: mapView === 'map' ? 'white' : 'transparent',
+      mapShadow: mapView === 'map' ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
+      mapColor: mapView === 'map' ? '#1A2421' : '#9BA8A0',
+      listBg: mapView === 'list' ? 'white' : 'transparent',
+      listShadow: mapView === 'list' ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
+      listColor: mapView === 'list' ? '#1A2421' : '#9BA8A0',
+
+      scanning, showQrSuccess,
+      hasChatMsg: !!chatQ,
+      chatQ, chatA,
+
+      cExplorar: c('explorar'), wExplorar: w('explorar'),
+      cMapa: c('mapa'), wMapa: w('mapa'),
+      cQr: a('qr') ? '#2A7A50' : '#9BA8A0', wQr: a('qr') ? '800' : '600',
+      cDuvidas: c('duvidas'), wDuvidas: w('duvidas'),
+      cPerfil: (a('perfil') || a('conquistas') || a('pontos')) ? '#2A7A50' : '#9BA8A0',
+      wPerfil: (a('perfil') || a('conquistas') || a('pontos')) ? '800' : '600',
+
+      goExplorar: () => this.setState({ tab: 'explorar' }),
+      goMapa: () => this.setState({ tab: 'mapa' }),
+      goQr: () => this.setState({ tab: 'qr' }),
+      goDuvidas: () => this.setState({ tab: 'duvidas' }),
+      goPerfil: () => this.setState({ tab: 'perfil' }),
+      goPontos: () => this.setState({ tab: 'pontos' }),
+      goConquistas: () => this.setState({ tab: 'conquistas' }),
+
+      setMapView: () => this.setState({ mapView: 'map' }),
+      setListView: () => this.setState({ mapView: 'list' }),
+
+      startScan: () => {
+        if (this.state.scanning) return;
+        this.setState({ scanning: true });
+        setTimeout(() => this.setState({ scanning: false, showQrSuccess: true }), 2200);
+      },
+      closeSuccess: () => this.setState({ showQrSuccess: false, tab: 'pontos' }),
+      stopProp: e => e && e.stopPropagation(),
+
+      askQ1: () => this.setState({ chatQ: 'Onde fica o Cristo Redentor de Encantado?', chatA: 'O Cristo Protetor fica no Morro do Cristo, a 2,1 km do centro. Para chegar, siga pela Rua Getúlio Vargas e depois suba a estrada do morro. Vale muito a pena — a vista de lá é incrível! ✨' }),
+      askQ2: () => this.setState({ chatQ: 'Como funciona o Passaporte Encantado?', chatA: 'É simples! Visite os locais turísticos de Encantado, escaneie o QR Code de cada lugar e acumule pontos. Com pontos, você ganha descontos e ingressos gratuitos. Já visitou 2 locais — continue explorando! 🌟' }),
+      askQ3: () => this.setState({ chatQ: 'O que é o Jardim dos Sentidos?', chatA: 'O Jardim dos Sentidos é uma floricultura sensorial única em Encantado! Um espaço pensado para estimular todos os sentidos — aromas de flores, texturas de plantas, cores vibrantes. Ideal para todas as idades, inclusive pessoas com mobilidade reduzida. 🌸' }),
+      askQ4: () => this.setState({ chatQ: 'Quais os horários das atrações?', chatA: 'Jardim dos Sentidos: seg–sáb 8h–18h, dom 9h–17h. Cristo Protetor: aberto todos os dias, 7h–20h. Museu Municipal: ter–sáb 9h–17h. Para mais detalhes, clique em cada local no mapa! 🕐' }),
+    };
+  }
+}
+</script>
+</body>
+</html>
