@@ -41,16 +41,6 @@ body {
   }
 }
 
-@keyframes floatFairy {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
-}
-
 @keyframes scanBeam {
   0% {
     top: 4%;

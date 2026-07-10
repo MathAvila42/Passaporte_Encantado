@@ -1,19 +1,21 @@
 import { useAppState } from '../state/AppState';
-import { FairyWatermark } from '../components/Fairy';
-
-const RECENT = [
-  { id: 'museu-municipal', name: 'Museu Municipal', when: 'Ontem · 10h30', emoji: '🏛️', bg: '#D8C8E8' },
-  { id: 'vinicola-sega-luos', name: 'Vinícola Sega Luos', when: 'Anteontem · 15h00', emoji: '🍷', bg: '#E0D0B8' },
-];
+import { getPlace, PLACES } from '../data/places';
+import PhotoImg from '../components/PhotoImg';
 
 export default function QrScreen() {
-  const { scanning, startScan } = useAppState();
+  const { scanning, startScan, visitedIds } = useAppState();
+  const nextPlace = PLACES.find((p) => !p.locked && !visitedIds.includes(p.id)) ?? PLACES[0];
+  const recent = visitedIds
+    .slice(-3)
+    .reverse()
+    .map(getPlace)
+    .filter(Boolean);
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: 'white', overflowY: 'auto' }}>
-      <div style={{ padding: '62px 20px 20px' }}>
-        <div style={{ fontSize: 24, fontWeight: 900, color: '#1A2421', marginBottom: 4 }}>Ler QR Code</div>
-        <div style={{ fontSize: 14, color: '#7A9A8E', marginBottom: 22 }}>Aponte para o QR Code do local</div>
+      <div style={{ padding: '52px 20px 20px' }}>
+        <div style={{ fontSize: 24, fontWeight: 800, color: '#1A2421', marginBottom: 4, fontFamily: "'Playfair Display', Georgia, serif" }}>Ler QR Code</div>
+        <div style={{ fontSize: 14, color: '#7A9A8E', marginBottom: 22 }}>Aponte para o QR Code do local para registrar sua visita</div>
 
         {/* Camera viewfinder */}
         <div style={{ borderRadius: 20, overflow: 'hidden', position: 'relative', background: '#1A2C24', height: 260, marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -32,7 +34,12 @@ export default function QrScreen() {
           <div style={{ position: 'absolute', top: 30, right: 70, width: 40, height: 40, borderTop: '3.5px solid #2A7A50', borderRight: '3.5px solid #2A7A50', borderRadius: '0 6px 0 0' }} />
           <div style={{ position: 'absolute', bottom: 30, left: 70, width: 40, height: 40, borderBottom: '3.5px solid #2A7A50', borderLeft: '3.5px solid #2A7A50', borderRadius: '0 0 0 6px' }} />
           <div style={{ position: 'absolute', bottom: 30, right: 70, width: 40, height: 40, borderBottom: '3.5px solid #2A7A50', borderRight: '3.5px solid #2A7A50', borderRadius: '0 0 6px 0' }} />
-          <FairyWatermark />
+          <div style={{ opacity: 0.16 }}>
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="1.2" />
+              <path d="M15.2 8.8l-2 4.4-4.4 2 2-4.4z" fill="white" />
+            </svg>
+          </div>
           {scanning && (
             <div
               style={{
@@ -73,31 +80,28 @@ export default function QrScreen() {
             <rect x="4" y="4" width="4" height="4" fill="white" />
             <rect x="14" y="4" width="4" height="4" fill="white" />
             <rect x="4" y="14" width="4" height="4" fill="white" />
-            <rect x="13" y="13" width="2" height="2" fill="white" />
-            <rect x="17" y="13" width="2" height="2" fill="white" />
-            <rect x="13" y="17" width="2" height="2" fill="white" />
-            <rect x="17" y="17" width="2" height="2" fill="white" />
-            <rect x="15" y="15" width="2" height="2" fill="white" />
           </svg>
-          <span style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>Simular: Jardim dos Sentidos</span>
+          <span style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>{scanning ? 'Lendo...' : `Simular: ${nextPlace.shortName}`}</span>
         </div>
 
         {/* Recently visited */}
-        <div style={{ fontSize: 17, fontWeight: 900, color: '#1A2421', marginBottom: 12 }}>Últimos locais visitados</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {RECENT.map((r) => (
-            <div key={r.id} style={{ background: '#F8FAF9', borderRadius: 14, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ width: 46, height: 46, borderRadius: 12, background: r.bg, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>
-                {r.emoji}
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 15, fontWeight: 800, color: '#1A2421' }}>{r.name}</div>
-                <div style={{ fontSize: 12, color: '#7A9A8E', marginTop: 1 }}>{r.when}</div>
-              </div>
-              <span style={{ background: '#E8F5EE', color: '#2A7A50', borderRadius: 8, padding: '4px 10px', fontSize: 12, fontWeight: 800 }}>check-in</span>
+        {recent.length > 0 && (
+          <>
+            <div style={{ fontSize: 17, fontWeight: 800, color: '#1A2421', marginBottom: 12, fontFamily: "'Playfair Display', Georgia, serif" }}>Últimos locais visitados</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {recent.map((place) => (
+                <div key={place.id} style={{ background: '#F8FAF9', borderRadius: 14, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <PhotoImg src={place.image} alt={place.name} style={{ width: 46, height: 46, borderRadius: 12, flexShrink: 0 }} />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 15, fontWeight: 800, color: '#1A2421' }}>{place.shortName}</div>
+                    <div style={{ fontSize: 12, color: '#7A9A8E', marginTop: 1 }}>{place.category}</div>
+                  </div>
+                  <span style={{ background: '#E8F5EE', color: '#2A7A50', borderRadius: 8, padding: '4px 10px', fontSize: 12, fontWeight: 800 }}>check-in</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
       <div style={{ height: 80 }} />
     </div>

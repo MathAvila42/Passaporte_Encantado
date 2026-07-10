@@ -1,17 +1,35 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { getPlace } from '../data/places';
+import { getPlace, PLACES } from '../data/places';
 
-const STORAGE_KEY = 'passaporte-encantado:v1';
+const STORAGE_KEY = 'passaporte-encantado:v2';
+
+const LEVELS = [
+  { min: 0, label: 'Explorador Iniciante' },
+  { min: 50, label: 'Viajante Curioso' },
+  { min: 100, label: 'Embaixador Encantado' },
+];
+
+export function getLevelInfo(points) {
+  let current = LEVELS[0];
+  let next = LEVELS[1];
+  for (let i = 0; i < LEVELS.length; i += 1) {
+    if (points >= LEVELS[i].min) {
+      current = LEVELS[i];
+      next = LEVELS[i + 1] ?? null;
+    }
+  }
+  return { current, next };
+}
 
 const DEFAULT_PERSISTED = {
-  points: 320,
-  visitedIds: ['cristo-protetor', 'jardim-sentidos'],
-  badgeIds: ['chegada-magica', 'jardim-sentidos', 'cristo-protetor'],
-  accessibility: { textoGrande: true, rotaAcessivel: true, altoContraste: false },
+  points: 30,
+  visitedIds: ['cristo-redentor', 'parque-moinhos', 'cantina-borghetti'],
+  badgeIds: ['primeira-vista', 'gastronauta', 'amigo-natureza', 'passaporte-encantado'],
+  favoriteIds: [],
   history: [
-    { id: 'h1', placeId: 'jardim-sentidos', label: 'Jardim dos Sentidos', emoji: '🌸', emojiBg: '#E0F5EC', when: 'Hoje · 14h22', delta: 150 },
-    { id: 'h2', placeId: 'cristo-protetor', label: 'Cristo Protetor', emoji: '⛪', emojiBg: '#FEF0E6', when: 'Ontem · 10h30', delta: 120 },
-    { id: 'h3', placeId: null, label: 'Bônus boas-vindas', emoji: '🌟', emojiBg: '#F0EBF8', when: 'Primeiro check-in', delta: 50 },
+    { id: 'h1', placeId: 'cantina-borghetti', label: 'Visitou Cantina Borghetti', when: 'ontem', delta: 10 },
+    { id: 'h2', placeId: 'parque-moinhos', label: 'Visitou Parque dos Moinhos', when: 'há 2 dias', delta: 10 },
+    { id: 'h3', placeId: 'cristo-redentor', label: 'Visitou Cristo Redentor — Morro do Cristo', when: 'há 2 dias', delta: 10 },
   ],
 };
 
@@ -20,21 +38,10 @@ function loadPersisted() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_PERSISTED;
     const parsed = JSON.parse(raw);
-    return {
-      ...DEFAULT_PERSISTED,
-      ...parsed,
-      accessibility: { ...DEFAULT_PERSISTED.accessibility, ...parsed.accessibility },
-    };
+    return { ...DEFAULT_PERSISTED, ...parsed };
   } catch {
     return DEFAULT_PERSISTED;
   }
-}
-
-function formatNowClock() {
-  const d = new Date();
-  const hh = String(d.getHours()).padStart(2, '0');
-  const mm = String(d.getMinutes()).padStart(2, '0');
-  return `${hh}h${mm}`;
 }
 
 const AppStateContext = createContext(null);
@@ -42,8 +49,14 @@ const AppStateContext = createContext(null);
 export function AppStateProvider({ children }) {
   const [persisted, setPersisted] = useState(loadPersisted);
 
-  const [tab, setTab] = useState('explorar');
+  const [tab, setTabRaw] = useState('guia');
+  const [guiaView, setGuiaView] = useState('home');
+  const [selectedPlaceId, setSelectedPlaceId] = useState(null);
   const [mapView, setMapView] = useState('map');
+  const [perfilView, setPerfilView] = useState('perfil');
+  const [search, setSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState('Todos');
+
   const [scanning, setScanning] = useState(false);
   const [showQrSuccess, setShowQrSuccess] = useState(false);
   const [chat, setChat] = useState({ q: '', a: '' });
@@ -53,6 +66,38 @@ export function AppStateProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
   }, [persisted]);
 
+  const setTab = useCallback((key) => {
+    setTabRaw(key);
+  }, []);
+
+  const openPlace = useCallback((id) => {
+    setSelectedPlaceId(id);
+    setGuiaView('detail');
+    setTabRaw('guia');
+  }, []);
+
+  const openMapa = useCallback(() => {
+    setGuiaView('mapa');
+    setTabRaw('guia');
+  }, []);
+
+  const backToGuiaHome = useCallback(() => {
+    setGuiaView('home');
+  }, []);
+
+  const openConquistas = useCallback(() => setPerfilView('conquistas'), []);
+  const backToPerfil = useCallback(() => setPerfilView('perfil'), []);
+
+  const toggleFavorite = useCallback((id) => {
+    setPersisted((prev) => {
+      const has = prev.favoriteIds.includes(id);
+      return {
+        ...prev,
+        favoriteIds: has ? prev.favoriteIds.filter((f) => f !== id) : [...prev.favoriteIds, id],
+      };
+    });
+  }, []);
+
   const checkIn = useCallback((placeId) => {
     const place = getPlace(placeId);
     if (!place) return;
@@ -61,10 +106,8 @@ export function AppStateProvider({ children }) {
       const entry = {
         id: `h-${Date.now()}`,
         placeId,
-        label: place.name,
-        emoji: place.emoji,
-        emojiBg: place.emojiBg,
-        when: `Hoje · ${formatNowClock()}`,
+        label: `Visitou ${place.name}`,
+        when: 'agora há pouco',
         delta: place.points,
       };
       return {
@@ -80,29 +123,24 @@ export function AppStateProvider({ children }) {
     });
   }, []);
 
-  const toggleAccessibility = useCallback((key) => {
-    setPersisted((prev) => ({
-      ...prev,
-      accessibility: { ...prev.accessibility, [key]: !prev.accessibility[key] },
-    }));
-  }, []);
-
   const startScan = useCallback(() => {
     setScanning((currentlyScanning) => {
       if (currentlyScanning) return currentlyScanning;
+      const next = PLACES.find((p) => !p.locked && !persisted.visitedIds.includes(p.id)) ?? PLACES[0];
       setTimeout(() => {
-        checkIn('jardim-sentidos');
-        setLastCheckedInId('jardim-sentidos');
+        checkIn(next.id);
+        setLastCheckedInId(next.id);
         setScanning(false);
         setShowQrSuccess(true);
       }, 2200);
       return true;
     });
-  }, [checkIn]);
+  }, [checkIn, persisted.visitedIds]);
 
   const closeSuccess = useCallback(() => {
     setShowQrSuccess(false);
-    setTab('pontos');
+    setTabRaw('perfil');
+    setPerfilView('conquistas');
   }, []);
 
   const askQuestion = useCallback((q, a) => setChat({ q, a }), []);
@@ -112,8 +150,21 @@ export function AppStateProvider({ children }) {
       ...persisted,
       tab,
       setTab,
+      guiaView,
+      setGuiaView,
+      selectedPlaceId,
+      openPlace,
+      openMapa,
+      backToGuiaHome,
       mapView,
       setMapView,
+      perfilView,
+      openConquistas,
+      backToPerfil,
+      search,
+      setSearch,
+      activeCategory,
+      setActiveCategory,
       scanning,
       showQrSuccess,
       chatQ: chat.q,
@@ -122,10 +173,35 @@ export function AppStateProvider({ children }) {
       startScan,
       closeSuccess,
       askQuestion,
-      toggleAccessibility,
+      toggleFavorite,
       checkIn,
+      levelInfo: getLevelInfo(persisted.points),
     }),
-    [persisted, tab, mapView, scanning, showQrSuccess, chat, lastCheckedInId, startScan, closeSuccess, askQuestion, toggleAccessibility, checkIn]
+    [
+      persisted,
+      tab,
+      setTab,
+      guiaView,
+      selectedPlaceId,
+      openPlace,
+      openMapa,
+      backToGuiaHome,
+      mapView,
+      perfilView,
+      openConquistas,
+      backToPerfil,
+      search,
+      activeCategory,
+      scanning,
+      showQrSuccess,
+      chat,
+      lastCheckedInId,
+      startScan,
+      closeSuccess,
+      askQuestion,
+      toggleFavorite,
+      checkIn,
+    ]
   );
 
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
