@@ -1,6 +1,7 @@
 import { useAppState } from '../state/AppState';
-import { C, FONT_DISPLAY } from '../theme';
+import { C } from '../theme';
 import { ArrowRight, Binoculars, Heart, Users } from '../components/Icons';
+import Logo from '../components/Logo';
 
 const SPARKLES = [
   { x: 67, y: 123, s: 12 },
@@ -66,24 +67,8 @@ export default function SplashScreen() {
         <BrandMark />
       </div>
 
-      <h1
-        style={{
-          position: 'absolute',
-          top: 339,
-          left: 0,
-          right: 0,
-          margin: 0,
-          textAlign: 'center',
-          fontFamily: FONT_DISPLAY,
-          fontWeight: 700,
-          fontSize: 39.5,
-          lineHeight: '41.5px',
-          color: C.cream,
-        }}
-      >
-        Passaporte
-        <br />
-        Encantado
+      <h1 style={{ position: 'absolute', top: 355, left: 0, right: 0, margin: 0, display: 'flex', justifyContent: 'center' }}>
+        <Logo height={68} color={C.cream} inner={C.splashFrom} />
       </h1>
 
       <p

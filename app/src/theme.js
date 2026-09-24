@@ -6,7 +6,7 @@ export const C = {
   inkSoft: '#4D5448',
   muted: '#7A8C6E',
   green: '#567040',
-  greenDark: '#2E4022',
+  greenDark: '#2E4023',
   line: '#DDE8D2',
   greenSoft: '#F0F4EC',
   greenTint: '#EAF0E1',
@@ -31,7 +31,6 @@ export const C = {
 
 export const FONT_BODY = "'DM Sans Variable', system-ui, sans-serif";
 export const FONT_HEAD = "'PT Sans', 'DM Sans Variable', system-ui, sans-serif";
-export const FONT_DISPLAY = "'Baloo 2', 'PT Sans', system-ui, sans-serif";
 
 // Pill colors per category (bg / text) and map-pin color.
 export const CATEGORY_STYLE = {
