@@ -1,135 +1,202 @@
-import { useAppState, getLevelInfo } from '../state/AppState';
-import { getPlace } from '../data/places';
+import { useAppState } from '../state/AppState';
+import { PLACES } from '../data/places';
 import { BADGES } from '../data/badges';
-import PhotoImg from '../components/PhotoImg';
+import { C, FONT_HEAD } from '../theme';
+import { ArrowLeft, Check, MapPin, Settings, Zap } from '../components/Icons';
+import { Distance, PlaceRow, PointsPill } from '../components/ui';
 
-const CONFIG_OPTIONS = [
-  { key: 'notificacoes', label: 'Notificações' },
-  { key: 'privacidade', label: 'Privacidade' },
-  { key: 'configuracoes', label: 'Configurações' },
-];
+function Heading({ title, subtitle, top }) {
+  return (
+    <div style={{ marginTop: top }}>
+      <h2 style={{ margin: 0, fontFamily: FONT_HEAD, fontWeight: 400, fontSize: 21, lineHeight: '26px', color: C.ink }}>{title}</h2>
+      <div style={{ fontSize: 12.6, color: C.muted, marginTop: 1 }}>{subtitle}</div>
+    </div>
+  );
+}
+
+function BadgeCard({ badge, unlocked }) {
+  return (
+    <div
+      style={{
+        position: 'relative',
+        height: 131,
+        borderRadius: 18,
+        border: `1px solid ${C.line}`,
+        background: unlocked ? C.surface : C.greenSoft,
+        textAlign: 'center',
+        padding: '15.5px 6px 0',
+      }}
+    >
+      <span
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 11,
+          width: 18,
+          height: 18,
+          borderRadius: '50%',
+          background: unlocked ? C.green : C.line,
+          color: '#FFFFFF',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 9,
+        }}
+      >
+        {unlocked ? <Check size={11} stroke={2.8} /> : '🔒'}
+      </span>
+      <div style={{ fontSize: 21, lineHeight: '27px', opacity: unlocked ? 1 : 0.55 }}>{badge.emoji}</div>
+      <div style={{ fontSize: 12.8, fontWeight: 600, lineHeight: '15.5px', color: unlocked ? C.ink : '#8A9A7E', marginTop: 5 }}>{badge.label}</div>
+      <div style={{ fontSize: 10.8, lineHeight: '13px', color: C.muted, marginTop: 4 }}>{badge.desc}</div>
+    </div>
+  );
+}
 
 export default function PerfilScreen() {
-  const { setTab, points, visitedIds, badgeIds, history, openConquistas } = useAppState();
-  const visited = visitedIds.map(getPlace).filter(Boolean);
-  const { current } = getLevelInfo(points);
-  const shownBadges = BADGES.slice(0, 6);
+  const { setTab, points, visitedIds, reviewedWhen, levelInfo, openPlace } = useAppState();
+  const { current, next } = levelInfo;
+  const visited = PLACES.filter((p) => visitedIds.includes(p.id));
+  const upcoming = PLACES.filter((p) => !visitedIds.includes(p.id)).slice(0, 3);
+  const unlockedBadges = BADGES.filter((b) => b.unlocked({ visitedIds, points }));
+  const goal = next?.min ?? points;
+  const progress = goal ? Math.min(1, points / goal) : 1;
 
   return (
-    <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', background: '#F8FAF9' }}>
-      <div style={{ background: 'white', padding: '52px 18px 20px', borderBottom: '1px solid #EEF4F0' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div onClick={() => setTab('guia')} style={{ width: 34, height: 34, background: '#F0F4F2', borderRadius: 17, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
-                <path d="M12 3l-6 6 6 6" stroke="#1A2421" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: '#1A2421', fontFamily: "'Playfair Display', Georgia, serif" }}>Meu Perfil</div>
-          </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="3" stroke="#2A7A50" strokeWidth="2" />
-            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#2A7A50" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </div>
-
-        <div style={{ background: '#F0F6F2', borderRadius: 16, padding: 16 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}>
-            <div style={{ width: 60, height: 60, borderRadius: 16, background: 'linear-gradient(145deg,#2A7A50,#1A5A38)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="1.8" />
-                <path d="M15.2 8.8l-2 4.4-4.4 2 2-4.4z" fill="white" fillOpacity="0.85" />
-              </svg>
-            </div>
-            <div>
-              <div style={{ fontSize: 18, fontWeight: 800, color: '#1A2421' }}>Viajante</div>
-              <div style={{ fontSize: 13, color: '#7A9A8E', marginTop: 1 }}>📍 Encantado – RS</div>
-              <span style={{ display: 'inline-block', marginTop: 6, background: '#2A7A50', color: 'white', borderRadius: 10, padding: '3px 10px', fontSize: 11, fontWeight: 800 }}>⚡ {current.label}</span>
-            </div>
-          </div>
-        </div>
+    <div className="screen" style={{ background: C.bg }}>
+      {/* Header */}
+      <div style={{ height: 96.5, borderBottom: `1px solid ${C.line}`, display: 'flex', alignItems: 'flex-start', padding: '51px 24px 0 22px' }}>
+        <button type="button" onClick={() => setTab('inicio')} style={{ border: 'none', background: 'none', padding: 0, marginTop: 1, color: C.inkSoft, cursor: 'pointer' }}>
+          <ArrowLeft size={24} stroke={1.8} />
+        </button>
+        <div style={{ flex: 1, marginLeft: 19, fontFamily: FONT_HEAD, fontSize: 20, lineHeight: '26px', color: C.ink }}>Meu Perfil</div>
+        <span style={{ color: C.inkSoft, marginTop: 1 }}>
+          <Settings size={22} stroke={1.7} />
+        </span>
       </div>
 
-      <div style={{ display: 'flex', background: 'white', borderTop: '1px solid #EEF4F0', borderBottom: '1px solid #EEF4F0' }}>
-        <div style={{ flex: 1, padding: '18px 0', textAlign: 'center', borderRight: '1px solid #EEF4F0' }}>
-          <div style={{ fontSize: 24, fontWeight: 800, color: '#1A2421' }}>{points}</div>
-          <div style={{ fontSize: 12, color: '#7A9A8E', fontWeight: 700, marginTop: 2 }}>Pontos</div>
-        </div>
-        <div style={{ flex: 1, padding: '18px 0', textAlign: 'center', borderRight: '1px solid #EEF4F0' }}>
-          <div style={{ fontSize: 24, fontWeight: 800, color: '#1A2421' }}>{visitedIds.length}</div>
-          <div style={{ fontSize: 12, color: '#7A9A8E', fontWeight: 700, marginTop: 2 }}>Visitados</div>
-        </div>
-        <div onClick={openConquistas} style={{ flex: 1, padding: '18px 0', textAlign: 'center', cursor: 'pointer' }}>
-          <div style={{ fontSize: 24, fontWeight: 800, color: '#1A2421' }}>{badgeIds.length}</div>
-          <div style={{ fontSize: 12, color: '#7A9A8E', fontWeight: 700, marginTop: 2 }}>Badges</div>
-        </div>
-      </div>
-
-      <div style={{ padding: '18px 16px 8px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-          <div style={{ fontSize: 17, fontWeight: 800, color: '#1A2421', fontFamily: "'Playfair Display', Georgia, serif" }}>Badges Conquistados</div>
-          <span onClick={openConquistas} style={{ fontSize: 13, color: '#2A7A50', fontWeight: 700, cursor: 'pointer' }}>Ver todos ›</span>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 20 }}>
-          {shownBadges.map((badge) => {
-            const unlocked = badgeIds.includes(badge.id);
-            return (
-              <div key={badge.id} style={{ background: unlocked ? '#EDF3EC' : '#F3F3F3', borderRadius: 14, padding: '14px 8px', textAlign: 'center' }}>
-                <div style={{ fontSize: 26, marginBottom: 6, filter: unlocked ? 'none' : 'grayscale(1)', opacity: unlocked ? 1 : 0.4 }}>{badge.emoji}</div>
-                <div style={{ fontSize: 11, fontWeight: unlocked ? 800 : 700, color: unlocked ? '#1A2421' : '#9BA8A0', lineHeight: 1.3 }}>{badge.label}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div style={{ padding: '0 16px 8px' }}>
-        <div style={{ fontSize: 17, fontWeight: 800, color: '#1A2421', marginBottom: 12, fontFamily: "'Playfair Display', Georgia, serif" }}>Atividade Recente</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
-          {history.slice(0, 4).map((entry) => (
-            <div key={entry.id} style={{ background: 'white', borderRadius: 14, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 1px 8px rgba(0,0,0,0.05)' }}>
-              <div style={{ width: 32, height: 32, borderRadius: 16, background: '#EEF7F2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <span style={{ color: '#2A7A50', fontSize: 15 }}>★</span>
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#1A2421' }}>{entry.label}</div>
-                <div style={{ fontSize: 12, color: '#9BA8A0', marginTop: 1 }}>{entry.when}</div>
-              </div>
-              <span style={{ fontSize: 14, fontWeight: 800, color: '#2A7A50' }}>+{entry.delta}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div style={{ padding: '0 16px 8px' }}>
-        <div style={{ fontSize: 17, fontWeight: 800, color: '#1A2421', marginBottom: 12, fontFamily: "'Playfair Display', Georgia, serif" }}>Locais visitados</div>
-        <div style={{ display: 'flex', gap: 14, overflowX: 'auto', marginBottom: 20 }}>
-          {visited.map((place) => (
-            <div key={place.id} style={{ textAlign: 'center', flexShrink: 0, width: 70 }}>
-              <PhotoImg src={place.image} alt={place.name} style={{ width: 60, height: 60, borderRadius: 30, margin: '0 auto 6px' }} />
-              <div style={{ fontSize: 11, color: '#425048', fontWeight: 700, lineHeight: 1.25 }}>{place.shortName}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div style={{ padding: '0 16px 24px' }}>
-        <div style={{ fontSize: 17, fontWeight: 800, color: '#1A2421', marginBottom: 12, fontFamily: "'Playfair Display', Georgia, serif" }}>Configurações</div>
-        <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 8px rgba(0,0,0,0.05)', marginBottom: 16 }}>
-          {CONFIG_OPTIONS.map((opt, i) => (
+      <div style={{ padding: '17px 16px 150px' }}>
+        {/* Profile card */}
+        <div style={{ borderRadius: 24, border: `1px solid ${C.line}`, background: C.greenSoft, padding: '31px 20px 0', minHeight: 211 }}>
+          <div style={{ display: 'flex', gap: 18 }}>
             <div
-              key={opt.key}
-              style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: i < CONFIG_OPTIONS.length - 1 ? '1px solid #F0F4F2' : 'none', cursor: 'pointer' }}
+              style={{
+                width: 63,
+                height: 63,
+                borderRadius: 14,
+                background: C.green,
+                border: '2.5px solid #FFFFFF',
+                boxShadow: '0 2px 6px rgba(26,31,22,0.18)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 31,
+                flexShrink: 0,
+              }}
             >
-              <span style={{ fontSize: 15, fontWeight: 700, color: '#1A2421' }}>{opt.label}</span>
-              <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
-                <path d="M6 3l6 6-6 6" stroke="#C8D8D0" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              🧭
             </div>
+            <div style={{ marginTop: -10 }}>
+              <div style={{ fontFamily: FONT_HEAD, fontSize: 29.5, lineHeight: '34px', color: C.greenDark }}>Viajante</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.6, color: C.muted, marginTop: 2 }}>
+                <MapPin size={12} stroke={2} /> Encantado – RS
+              </div>
+              <span
+                style={{
+                  marginTop: 6,
+                  height: 24,
+                  padding: '0 10px 0 11px',
+                  borderRadius: 12,
+                  background: C.green,
+                  color: '#FFFFFF',
+                  fontSize: 12.6,
+                  fontWeight: 500,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                }}
+              >
+                <Zap size={12} stroke={2} /> {current.label}
+              </span>
+            </div>
+          </div>
+          <div style={{ height: 1, background: C.line, margin: '15px 1px 0' }} />
+          <div style={{ display: 'flex', padding: '18px 0 20px' }}>
+            {[
+              [points, 'Pontos'],
+              [visitedIds.length, 'Visitados'],
+              [unlockedBadges.length, 'Badges'],
+            ].map(([value, label]) => (
+              <div key={label} style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontFamily: FONT_HEAD, fontSize: 26.7, lineHeight: '30px', color: C.green }}>{value}</div>
+                <div style={{ fontSize: 13, color: C.muted }}>{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Conquistas */}
+        <Heading title="Conquistas" subtitle="Explore e ganhe pontos em Encantado" top={25} />
+        <div style={{ marginTop: 14, borderRadius: 18, border: `1px solid ${C.line}`, background: C.greenSoft, padding: '16px 16px 16px 17px' }}>
+          <div style={{ display: 'flex' }}>
+            <div style={{ width: 133 }}>
+              <div style={{ fontSize: 12.6, fontWeight: 600, color: C.ink, lineHeight: '17px' }}>Seus pontos</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 1 }}>
+                <span style={{ fontFamily: FONT_HEAD, fontSize: 32.7, lineHeight: '36px', color: C.ink }}>{points}</span>
+                <span style={{ fontSize: 13, color: C.muted }}>pts</span>
+              </div>
+              <div style={{ fontSize: 12.6, fontWeight: 600, color: C.green, marginTop: 0 }}>{current.label}</div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 12.7, fontWeight: 500, color: C.greenDark, lineHeight: '17px' }}>{visitedIds.length} locais visitados</div>
+              <div style={{ fontSize: 11.6, color: C.muted, marginTop: 5 }}>{next ? `Progresso para ${next.label}` : 'Nível máximo alcançado'}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 5 }}>
+                <div style={{ flex: 1, height: 8, borderRadius: 4, background: C.line, overflow: 'hidden' }}>
+                  <div style={{ width: `${progress * 100}%`, height: '100%', borderRadius: 4, background: C.green }} />
+                </div>
+                <span style={{ fontSize: 12.5, fontWeight: 700, color: C.greenDark }}>
+                  {points}/{goal}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div style={{ fontSize: 11.5, color: C.muted, marginTop: 12 }}>Ganhe +10 pts por visita confirmada e review de local turístico</div>
+        </div>
+
+        {/* Badges */}
+        <Heading title="Badges" subtitle={`${unlockedBadges.length}/${BADGES.length} conquistados`} top={28} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '11px 12px', marginTop: 12 }}>
+          {BADGES.map((badge) => (
+            <BadgeCard key={badge.id} badge={badge} unlocked={unlockedBadges.includes(badge)} />
           ))}
         </div>
-        <div style={{ border: '1.5px solid #F0B8B8', borderRadius: 14, padding: 14, textAlign: 'center', cursor: 'pointer' }}>
-          <span style={{ fontSize: 14.5, fontWeight: 800, color: '#D64545' }}>⇥ Sair da conta</span>
+
+        {/* Já visitados */}
+        <Heading title="Já visitados" subtitle={`${visited.length} locais`} top={27} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 16 }}>
+          {visited.map((place) => (
+            <PlaceRow
+              key={place.id}
+              place={place}
+              visited
+              onClick={() => openPlace(place.id)}
+              footer={<span style={{ fontSize: 13, color: C.muted }}>Review feito {reviewedWhen[place.id] ?? 'recentemente'}</span>}
+              right={<PointsPill points={place.points} tone="earned" />}
+            />
+          ))}
+        </div>
+
+        {/* Próximas visitas */}
+        <Heading title="Próximas visitas" subtitle="+10 pts cada" top={28} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 16 }}>
+          {upcoming.map((place) => (
+            <PlaceRow
+              key={place.id}
+              place={place}
+              onClick={() => openPlace(place.id)}
+              footer={<Distance value={place.distance} />}
+              right={<PointsPill points={place.points} />}
+            />
+          ))}
         </div>
       </div>
     </div>

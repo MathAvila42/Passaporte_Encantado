@@ -9,9 +9,18 @@ body {
 }
 
 body {
-  background: #E8EFE8;
-  font-family: 'Nunito', sans-serif;
-  color: #1A2421;
+  background: #e4e9df;
+  font-family: 'DM Sans Variable', system-ui, sans-serif;
+  /* The prototype renders DM Sans at the 32pt optical size (tighter spacing). */
+  font-variation-settings: 'opsz' 32;
+  color: #1a1f16;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font-family: inherit;
+  font-variation-settings: inherit;
 }
 
 #root {
@@ -19,44 +28,53 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
 }
 
+/* The prototype is drawn on a 402 × 874 phone frame. */
 .phone-shell {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 402px;
   height: 100dvh;
   overflow: hidden;
-  background: white;
-  font-family: 'Nunito', sans-serif;
+  background: #fafafa;
 }
 
 @media (min-width: 560px) {
   .phone-shell {
-    height: min(100dvh, 900px);
-    margin: 20px 0;
-    border-radius: 32px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+    height: min(100dvh, 874px);
+    border-radius: 36px;
+    box-shadow: 0 10px 40px rgba(30, 45, 20, 0.22);
   }
 }
 
-@keyframes scanBeam {
-  0% {
-    top: 4%;
-  }
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.screen::-webkit-scrollbar,
+.hscroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hscroll {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+@keyframes scanLine {
+  0%,
   100% {
-    top: 90%;
+    transform: translateY(-120px);
+    opacity: 0.2;
   }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
+  50% {
+    transform: translateY(120px);
     opacity: 1;
   }
 }

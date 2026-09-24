@@ -1,44 +1,32 @@
-import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { getPlace, PLACES } from '../data/places';
+import { createContext, useContext, useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { getPlace } from '../data/places';
 
-const STORAGE_KEY = 'passaporte-encantado:v2';
+const STORAGE_KEY = 'passaporte-encantado:v3';
 
 const LEVELS = [
   { min: 0, label: 'Explorador Iniciante' },
   { min: 50, label: 'Viajante Curioso' },
-  { min: 100, label: 'Embaixador Encantado' },
+  { min: 100, label: 'Embaixador' },
 ];
 
 export function getLevelInfo(points) {
-  let current = LEVELS[0];
-  let next = LEVELS[1];
-  for (let i = 0; i < LEVELS.length; i += 1) {
-    if (points >= LEVELS[i].min) {
-      current = LEVELS[i];
-      next = LEVELS[i + 1] ?? null;
-    }
-  }
-  return { current, next };
+  let index = 0;
+  LEVELS.forEach((lvl, i) => {
+    if (points >= lvl.min) index = i;
+  });
+  return { current: LEVELS[index], next: LEVELS[index + 1] ?? null };
 }
 
 const DEFAULT_PERSISTED = {
-  points: 30,
   visitedIds: ['cristo-redentor', 'parque-moinhos', 'cantina-borghetti'],
-  badgeIds: ['primeira-vista', 'gastronauta', 'amigo-natureza', 'passaporte-encantado'],
+  reviewedWhen: { 'cristo-redentor': 'há 2 dias', 'parque-moinhos': 'há 2 dias', 'cantina-borghetti': 'ontem' },
   favoriteIds: [],
-  history: [
-    { id: 'h1', placeId: 'cantina-borghetti', label: 'Visitou Cantina Borghetti', when: 'ontem', delta: 10 },
-    { id: 'h2', placeId: 'parque-moinhos', label: 'Visitou Parque dos Moinhos', when: 'há 2 dias', delta: 10 },
-    { id: 'h3', placeId: 'cristo-redentor', label: 'Visitou Cristo Redentor — Morro do Cristo', when: 'há 2 dias', delta: 10 },
-  ],
 };
 
 function loadPersisted() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return DEFAULT_PERSISTED;
-    const parsed = JSON.parse(raw);
-    return { ...DEFAULT_PERSISTED, ...parsed };
+    return raw ? { ...DEFAULT_PERSISTED, ...JSON.parse(raw) } : DEFAULT_PERSISTED;
   } catch {
     return DEFAULT_PERSISTED;
   }
@@ -48,160 +36,100 @@ const AppStateContext = createContext(null);
 
 export function AppStateProvider({ children }) {
   const [persisted, setPersisted] = useState(loadPersisted);
-
-  const [tab, setTabRaw] = useState('guia');
-  const [guiaView, setGuiaView] = useState('home');
-  const [selectedPlaceId, setSelectedPlaceId] = useState(null);
-  const [mapView, setMapView] = useState('map');
-  const [perfilView, setPerfilView] = useState('perfil');
-  const [search, setSearch] = useState('');
-  const [activeCategory, setActiveCategory] = useState('Todos');
-
-  const [scanning, setScanning] = useState(false);
-  const [showQrSuccess, setShowQrSuccess] = useState(false);
-  const [chat, setChat] = useState({ q: '', a: '' });
-  const [lastCheckedInId, setLastCheckedInId] = useState(null);
+  const [showSplash, setShowSplash] = useState(true);
+  const [tab, setTabRaw] = useState('inicio');
+  const [previousTab, setPreviousTab] = useState('inicio');
+  const [guiaView, setGuiaView] = useState('lista');
+  const [detailId, setDetailId] = useState(null);
+  const [showDuvidas, setShowDuvidas] = useState(false);
+  const [confirmingId, setConfirmingId] = useState('cristo-redentor');
+  const [qrStatus, setQrStatus] = useState('pending');
+  const scanTimer = useRef(null);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
+    } catch {
+      // storage unavailable (private mode) — keep state in memory only
+    }
   }, [persisted]);
 
-  const setTab = useCallback((key) => {
-    setTabRaw(key);
-  }, []);
+  useEffect(() => () => clearTimeout(scanTimer.current), []);
 
-  const openPlace = useCallback((id) => {
-    setSelectedPlaceId(id);
-    setGuiaView('detail');
-    setTabRaw('guia');
-  }, []);
+  const setTab = useCallback(
+    (key) => {
+      setDetailId(null);
+      setShowDuvidas(false);
+      if (key !== tab) {
+        setPreviousTab(tab);
+        setTabRaw(key);
+      }
+    },
+    [tab]
+  );
 
-  const openMapa = useCallback(() => {
-    setGuiaView('mapa');
-    setTabRaw('guia');
-  }, []);
+  const closeQr = useCallback(() => setTab(previousTab === 'qr' ? 'inicio' : previousTab), [previousTab, setTab]);
 
-  const backToGuiaHome = useCallback(() => {
-    setGuiaView('home');
+  const markVisited = useCallback((id) => {
+    setPersisted((prev) =>
+      prev.visitedIds.includes(id)
+        ? prev
+        : {
+            ...prev,
+            visitedIds: [...prev.visitedIds, id],
+            reviewedWhen: { ...prev.reviewedWhen, [id]: 'agora' },
+          }
+    );
   }, []);
-
-  const openConquistas = useCallback(() => setPerfilView('conquistas'), []);
-  const backToPerfil = useCallback(() => setPerfilView('perfil'), []);
 
   const toggleFavorite = useCallback((id) => {
-    setPersisted((prev) => {
-      const has = prev.favoriteIds.includes(id);
-      return {
-        ...prev,
-        favoriteIds: has ? prev.favoriteIds.filter((f) => f !== id) : [...prev.favoriteIds, id],
-      };
-    });
+    setPersisted((prev) => ({
+      ...prev,
+      favoriteIds: prev.favoriteIds.includes(id) ? prev.favoriteIds.filter((f) => f !== id) : [...prev.favoriteIds, id],
+    }));
   }, []);
 
-  const checkIn = useCallback((placeId) => {
-    const place = getPlace(placeId);
-    if (!place) return;
-    setPersisted((prev) => {
-      if (prev.visitedIds.includes(placeId)) return prev;
-      const entry = {
-        id: `h-${Date.now()}`,
-        placeId,
-        label: `Visitou ${place.name}`,
-        when: 'agora há pouco',
-        delta: place.points,
-      };
-      return {
-        ...prev,
-        points: prev.points + place.points,
-        visitedIds: [...prev.visitedIds, placeId],
-        badgeIds:
-          place.badgeId && !prev.badgeIds.includes(place.badgeId)
-            ? [...prev.badgeIds, place.badgeId]
-            : prev.badgeIds,
-        history: [entry, ...prev.history],
-      };
-    });
-  }, []);
-
-  const startScan = useCallback(() => {
-    setScanning((currentlyScanning) => {
-      if (currentlyScanning) return currentlyScanning;
-      const next = PLACES.find((p) => !p.locked && !persisted.visitedIds.includes(p.id)) ?? PLACES[0];
-      setTimeout(() => {
-        checkIn(next.id);
-        setLastCheckedInId(next.id);
-        setScanning(false);
-        setShowQrSuccess(true);
+  // Simulated QR read: the chosen place becomes "Confirmando visita" and is confirmed after a short scan.
+  const simulateScan = useCallback(
+    (id) => {
+      clearTimeout(scanTimer.current);
+      setConfirmingId(id);
+      setQrStatus('scanning');
+      scanTimer.current = setTimeout(() => {
+        markVisited(id);
+        setQrStatus('done');
       }, 2200);
-      return true;
-    });
-  }, [checkIn, persisted.visitedIds]);
+    },
+    [markVisited]
+  );
 
-  const closeSuccess = useCallback(() => {
-    setShowQrSuccess(false);
-    setTabRaw('perfil');
-    setPerfilView('conquistas');
-  }, []);
-
-  const askQuestion = useCallback((q, a) => setChat({ q, a }), []);
+  const visitedIds = persisted.visitedIds;
+  const points = visitedIds.filter((id) => getPlace(id)).length * 10;
 
   const value = useMemo(
     () => ({
       ...persisted,
+      points,
+      levelInfo: getLevelInfo(points),
+      showSplash,
+      startJourney: () => setShowSplash(false),
       tab,
       setTab,
+      closeQr,
       guiaView,
       setGuiaView,
-      selectedPlaceId,
-      openPlace,
-      openMapa,
-      backToGuiaHome,
-      mapView,
-      setMapView,
-      perfilView,
-      openConquistas,
-      backToPerfil,
-      search,
-      setSearch,
-      activeCategory,
-      setActiveCategory,
-      scanning,
-      showQrSuccess,
-      chatQ: chat.q,
-      chatA: chat.a,
-      lastCheckedInId,
-      startScan,
-      closeSuccess,
-      askQuestion,
+      detailId,
+      openPlace: setDetailId,
+      closePlace: () => setDetailId(null),
+      showDuvidas,
+      setShowDuvidas,
+      confirmingId,
+      qrStatus,
+      simulateScan,
+      markVisited,
       toggleFavorite,
-      checkIn,
-      levelInfo: getLevelInfo(persisted.points),
     }),
-    [
-      persisted,
-      tab,
-      setTab,
-      guiaView,
-      selectedPlaceId,
-      openPlace,
-      openMapa,
-      backToGuiaHome,
-      mapView,
-      perfilView,
-      openConquistas,
-      backToPerfil,
-      search,
-      activeCategory,
-      scanning,
-      showQrSuccess,
-      chat,
-      lastCheckedInId,
-      startScan,
-      closeSuccess,
-      askQuestion,
-      toggleFavorite,
-      checkIn,
-    ]
+    [persisted, points, showSplash, tab, setTab, closeQr, guiaView, detailId, showDuvidas, confirmingId, qrStatus, simulateScan, markVisited, toggleFavorite]
   );
 
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
